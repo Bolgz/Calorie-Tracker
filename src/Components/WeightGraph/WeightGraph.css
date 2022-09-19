@@ -1,0 +1,16 @@
+.graph {
+  min-height: 350px;
+  max-height: 350px;
+  min-width: 800px;
+  max-width: 800px;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.weight-entry-section {
+  min-width: 400px;
+  max-width: 400px;
+  float: right;
+  margin-top: -315px;
+  margin-right: 150px;
+}
