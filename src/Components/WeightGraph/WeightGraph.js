@@ -14,7 +14,9 @@ import {
 import { Line } from "react-chartjs-2";
 import React, { useState, useEffect } from "react";
 import * as utilities from "../../Utilities/FireStoreUtilities";
+import * as graphUtilities from "../../Utilities/GraphUtilities";
 import { getAuth } from "firebase/auth";
+import DateFilter from "../Filters/DateFilter";
 
 ChartJS.register(
   CategoryScale,
@@ -43,10 +45,14 @@ function WeightGraph() {
     December: [],
   });
 
-  //State that stores the average weight for each month [list 0 -> 11]
+  //State that stores the average weight for each day/month (depending on chosen filter)
   const [weightAverages, setWeightAverages] = useState([]);
   //List of lists that stores each weight entry in full [[date, weight], [date, weight]]. Passed into WeightEntry.js as prop
   const [allEntries, setAllEntries] = useState([]);
+  //State that holds month filter
+  const [monthFilter, setMonthFilter] = useState("");
+  //State that holds year filter
+  const [yearFilter, setYearFilter] = useState("");
 
   //Using useEffect to stop infinite loop
   //Retrieving weight entries from firestore
@@ -58,21 +64,167 @@ function WeightGraph() {
     // eslint-disable-next-line
   }, []);
 
-  //Graph options
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: false,
-      },
-    },
-  };
+  function populate(entry) {
+    //Adds each entry to the allEntries state
+    setAllEntries((prevState) => [...prevState, [entry.date, entry.weight]]);
+    //Returns an object with each month as a key and a list of weights for that month as the value
+    const newWeightObject = graphUtilities.populate(entry, weightObject);
+
+    //Sets the weightObject state to the newly created object
+    setWeightObject(newWeightObject);
+    //If there is no month filter, calculate average monthly weight
+    if (monthFilter === "") {
+      calculateWeightAveragesYear();
+      //If there is a month filter, calculate weight average for each day of month
+    } else {
+      calculateWeightAveragesMonth();
+    }
+  }
+
+  //This is called on page refresh/first load. Populates weight entry object with entries in firestore
+  function populateWeightEntryObject(entries) {
+    //For each entry grabbed from firestore call populate
+    entries.forEach((entry) => populate(entry));
+  }
+
+  //Passed as prop to WeightEntry.js - retrieves weight entry data
+  function handleWeightEntry(_weight, _date) {
+    const entry = { weight: _weight, date: _date };
+    populate(entry);
+  }
+
+  function removeWeightEntry(date, weight) {
+    //Removes entry from all weight entries list
+    let copyEntries = allEntries.filter(
+      (entry) => !(entry[0] === date && entry[1] === weight)
+    );
+    setAllEntries(copyEntries);
+
+    //Removes entry from firestore
+    const auth = getAuth();
+    utilities.removeWeightEntry(date, weight, auth.currentUser.uid);
+
+    //Removes entry from weight object (so that graph can be updated)
+    //Returns an object with each month as a key and a list of weights for that month as the value
+    const newWeightObject = graphUtilities.removeWeightEntry(
+      weight,
+      date,
+      weightObject
+    );
+
+    //Sets the weightObject state to the newly created object
+    setWeightObject(newWeightObject);
+    //If there is no month filter, calculate average monthly weight
+    if (monthFilter === "") {
+      calculateWeightAveragesYear();
+      //If there is a month filter, calculate weight average for each day of month
+    } else {
+      calculateWeightAveragesMonth();
+    }
+  }
+
+  //Calculates weight average for each month and set's the weightAverage state
+  function calculateWeightAveragesYear() {
+    let weights = [];
+    for (let index = 0; index < 12; index++) {
+      let total = 0;
+      weightObject[Object.keys(weightObject)[index]].forEach((weight) => {
+        total += parseFloat(weight);
+      });
+      total = total / weightObject[Object.keys(weightObject)[index]].length;
+      weights[index] = total;
+    }
+    setWeightAverages(weights);
+  }
+
+  //Calculates weight average for each day of the month and set's the weightAverage state
+  function calculateWeightAveragesMonth() {
+    if (monthFilter.length <= 0) return;
+    let weights = [];
+    //Sort weights by date
+    weightObject[monthFilter].sort(sortByDate);
+    function sortByDate(a, b) {
+      if (a[1] === b[1]) {
+        return 0;
+      } else {
+        return a[1] < b[1] ? -1 : 1;
+      }
+    }
+
+    for (let index = 0; index < weightObject[monthFilter].length; index++) {
+      //Get the day of each weight entry (02 becomes 2 etc)
+      let day =
+        weightObject[monthFilter][index][1][0] +
+        weightObject[monthFilter][index][1][1];
+      weights[parseInt(day) - 1] = weightObject[monthFilter][index][0];
+    }
+    setWeightAverages(weights);
+  }
+
+  //Called whenever monthFilter state changes (callback)
+  useEffect(() => {
+    if (monthFilter.length > 0) {
+      calculateWeightAveragesMonth();
+    } else {
+      calculateWeightAveragesYear();
+    }
+    // eslint-disable-next-line
+  }, [monthFilter]);
+
+  //Called whenever monthFilter state changes (callback)
+  useEffect(() => {
+    if (yearFilter.length > 0) {
+      calculateWeightAveragesMonth();
+    } else {
+      calculateWeightAveragesYear();
+    }
+    // eslint-disable-next-line
+  }, [yearFilter]);
+
+  //Changes month filter
+  function handleChangeMonthFilter(month) {
+    setMonthFilter(month);
+  }
+
+  function handleChangeYearFilter(year) {
+    setYearFilter(year);
+  }
 
   //Graph labels (X Axis)
-  const labels = [
+  let monthLabels = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30",
+    "31",
+  ];
+  let yearLabels = [
     "January",
     "February",
     "March",
@@ -87,218 +239,20 @@ function WeightGraph() {
     "December",
   ];
 
-  //This is called on page refresh/first load. Populates weight entry object with entries in firestore
-  function populateWeightEntryObject(entries) {
-    entries.forEach((entry) => populate(entry));
+  let labels = monthFilter === "" ? yearLabels : monthLabels;
 
-    function populate(entry) {
-      setAllEntries((prevState) => [...prevState, [entry.date, entry.weight]]);
-      const month = entry.date[5] + entry.date[6];
-      let copyObject = weightObject;
-      switch (month) {
-        case "01":
-          copyObject.January.push(entry.weight);
-          break;
-        case "02":
-          copyObject.February.push(entry.weight);
-          break;
-        case "03":
-          copyObject.March.push(entry.weight);
-          break;
-        case "04":
-          copyObject.April.push(entry.weight);
-          break;
-        case "05":
-          copyObject.May.push(entry.weight);
-          break;
-        case "06":
-          copyObject.June.push(entry.weight);
-          break;
-        case "07":
-          copyObject.July.push(entry.weight);
-          break;
-        case "08":
-          copyObject.August.push(entry.weight);
-          break;
-        case "09":
-          copyObject.September.push(entry.weight);
-          break;
-        case "10":
-          copyObject.October.push(entry.weight);
-          break;
-        case "11":
-          copyObject.November.push(entry.weight);
-          break;
-        case "12":
-          copyObject.December.push(entry.weight);
-          break;
-        default:
-          break;
-      }
-      setWeightObject(copyObject);
-      calculateWeightAverages();
-    }
-  }
-
-  //Passed as prop to WeightEntry.js - retrieves weight entry data
-  function handleWeightEntry(date, weight) {
-    setAllEntries((prevState) => [...prevState, [date, weight]]);
-    const month = date[5] + date[6];
-    let copyObject = weightObject;
-    switch (month) {
-      case "01":
-        copyObject.January.push(weight);
-        break;
-      case "02":
-        copyObject.February.push(weight);
-        break;
-      case "03":
-        copyObject.March.push(weight);
-        break;
-      case "04":
-        copyObject.April.push(weight);
-        break;
-      case "05":
-        copyObject.May.push(weight);
-        break;
-      case "06":
-        copyObject.June.push(weight);
-        break;
-      case "07":
-        copyObject.July.push(weight);
-        break;
-      case "08":
-        copyObject.August.push(weight);
-        break;
-      case "09":
-        copyObject.September.push(weight);
-        break;
-      case "10":
-        copyObject.October.push(weight);
-        break;
-      case "11":
-        copyObject.November.push(weight);
-        break;
-      case "12":
-        copyObject.December.push(weight);
-        break;
-      default:
-        break;
-    }
-    setWeightObject(copyObject);
-    calculateWeightAverages();
-  }
-
-  function removeWeightEntry(date, weight) {
-    //Removes entry from all weight entries list
-    let copyEntries = allEntries.filter(
-      (entry) => entry[0] !== date && entry[1] !== weight
-    );
-    setAllEntries(copyEntries);
-
-    //Removes entry from firestore
-    const auth = getAuth();
-    utilities.removeWeightEntry(date, weight, auth.currentUser.uid);
-
-    //Removes entry from weight object (so that graph can be updated)
-    const month = date[5] + date[6];
-    let copyObject = weightObject;
-    let index = 0;
-    switch (month) {
-      case "01":
-        index = copyObject.January.indexOf(weight);
-        if (index !== -1) {
-          copyObject.January.splice(index, 1);
-        }
-        break;
-      case "02":
-        index = copyObject.February.indexOf(weight);
-        if (index !== -1) {
-          copyObject.February.splice(index, 1);
-        }
-        break;
-      case "03":
-        index = copyObject.March.indexOf(weight);
-        if (index !== -1) {
-          copyObject.March.splice(index, 1);
-        }
-        break;
-      case "04":
-        index = copyObject.April.indexOf(weight);
-        if (index !== -1) {
-          copyObject.April.splice(index, 1);
-        }
-        break;
-      case "05":
-        index = copyObject.May.indexOf(weight);
-        if (index !== -1) {
-          copyObject.May.splice(index, 1);
-        }
-        break;
-      case "06":
-        index = copyObject.June.indexOf(weight);
-        if (index !== -1) {
-          copyObject.JaJunenuary.splice(index, 1);
-        }
-        break;
-      case "07":
-        index = copyObject.July.indexOf(weight);
-        if (index !== -1) {
-          copyObject.July.splice(index, 1);
-        }
-        break;
-      case "08":
-        index = copyObject.August.indexOf(weight);
-        if (index !== -1) {
-          copyObject.August.splice(index, 1);
-        }
-        break;
-      case "09":
-        console.log(copyObject.September);
-        index = copyObject.September.indexOf(weight);
-        if (index !== -1) {
-          copyObject.September.splice(index, 1);
-        }
-        console.log(copyObject.September);
-        break;
-      case "10":
-        index = copyObject.October.indexOf(weight);
-        if (index !== -1) {
-          copyObject.October.splice(index, 1);
-        }
-        break;
-      case "11":
-        index = copyObject.November.indexOf(weight);
-        if (index !== -1) {
-          copyObject.November.splice(index, 1);
-        }
-        break;
-      case "12":
-        index = copyObject.December.indexOf(weight);
-        if (index !== -1) {
-          copyObject.December.splice(index, 1);
-        }
-        break;
-      default:
-        break;
-    }
-    setWeightObject(copyObject);
-    calculateWeightAverages();
-  }
-
-  //Calculates weight average for each month and set's the weightAverage state
-  function calculateWeightAverages() {
-    let weights = [];
-    for (let index = 0; index < 12; index++) {
-      let total = 0;
-      weightObject[Object.keys(weightObject)[index]].forEach((weight) => {
-        total += parseFloat(weight);
-      });
-      total = total / weightObject[Object.keys(weightObject)[index]].length;
-      weights[index] = total;
-    }
-    setWeightAverages(weights);
-  }
+  //Graph options
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+      },
+    },
+  };
 
   //Passed into <Line/> to draw the graph
   const graphData = {
@@ -312,8 +266,13 @@ function WeightGraph() {
       },
     ],
   };
+
   return (
     <div>
+      <DateFilter
+        changeMonthFilter={handleChangeMonthFilter}
+        changeYearFilter={handleChangeYearFilter}
+      />
       <Line options={options} data={graphData} className="graph" />
       <div className="weight-entry-section">
         <WeightEntryForm addWeightEntry={handleWeightEntry} />

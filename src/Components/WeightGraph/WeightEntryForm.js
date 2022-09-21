@@ -18,11 +18,16 @@ function WeightEntryForm(props) {
       utilities.addWeightEntry(weightDate, weightValue, auth.currentUser.uid);
     });
 
-    props.addWeightEntry(weightDate, weightValue);
+    props.addWeightEntry(weightValue, weightDate);
 
     //Resets message box input on submit
     ReactDOM.findDOMNode(document.getElementById("weightDate")).value = "";
     ReactDOM.findDOMNode(document.getElementById("weightValue")).value = "";
+  }
+
+  function formatDate(date) {
+    const [year, month, day] = date.split("-");
+    setWeightDate(day + "-" + month + "-" + year);
   }
 
   return (
@@ -34,7 +39,7 @@ function WeightEntryForm(props) {
             required
             type="date"
             placeholder="Enter Date"
-            onChange={(e) => setWeightDate(e.target.value)}
+            onChange={(e) => formatDate(e.target.value)}
             id="weightDate"
           />
         </Form.Group>
@@ -52,10 +57,6 @@ function WeightEntryForm(props) {
           Add Weight
         </Button>
       </Form>
-
-      <div>
-        <h4 className="weight-entries-title">All Weight Entries</h4>
-      </div>
     </div>
   );
 }

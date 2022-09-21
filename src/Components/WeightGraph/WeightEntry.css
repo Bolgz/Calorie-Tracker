@@ -5,28 +5,29 @@
   width: 350px;
   margin: auto;
   margin-bottom: 10px;
-  padding: 20px;
-  padding-bottom: 20px;
+  padding: 8px;
+  display: flex;
 }
 
 .weight_entry_weight {
   display: inline;
   float: left;
   font-size: large;
-  margin-top: -12px;
+  margin: auto;
+}
+
+.weight_entry_remove {
+  display: inline;
+  float: right;
+  font-size: large;
+  margin: auto;
 }
 
 .weight_entry_date {
   display: inline;
-  float: right;
+  float: left;
   font-size: large;
-  margin-top: -12px;
-  margin-right: 80px;
-}
-
-.weight_entry_remove {
-  float: right;
-  margin-top: -12px;
+  margin: auto;
 }
 
 .weight_entry_scroll_box {
@@ -36,8 +37,22 @@
   width: 400px;
   padding: 10px;
   margin: auto;
+  margin-top: 10px;
   overflow-y: scroll;
-  height: 550px;
+  height: 540px;
+}
+
+.month_dropdown_list {
+  display: inline;
+  margin-right: 50px;
+}
+
+.weight_entries_section {
+  margin-left: 65px;
+}
+
+.year_dropdown_list {
+  display: inline;
 }
 
 ::-webkit-scrollbar {

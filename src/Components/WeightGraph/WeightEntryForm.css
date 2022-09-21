@@ -8,6 +8,8 @@
   border-radius: 10px;
   border-color: rgb(0, 0, 0);
   padding: 4%;
+  margin-left: 65px;
+  min-width: 395px;
 }
 
 .weight-entries-title {

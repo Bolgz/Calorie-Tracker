@@ -47,7 +47,7 @@ function Login() {
   return (
     <div className="main-content-login">
       <Form className="login-form">
-        <h2 className="form-title-login">Log in to Chat-App!</h2>
+        <h2 className="form-title-login">Log in to Calorie-Tracker!</h2>
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label className="form-subtitle-login">Email address</Form.Label>
