@@ -8,7 +8,7 @@ function DateFilter(props) {
   const [monthFilter, setMonthFilter] = useState("");
 
   //State that holds year filter
-  const [yearFilter, setYearFilter] = useState("");
+  const [yearFilter, setYearFilter] = useState("2022");
 
   function changeMonthFilter(eventKey) {
     setMonthFilter(eventKey);
@@ -22,7 +22,9 @@ function DateFilter(props) {
 
   function resetFilters() {
     setMonthFilter("");
+    setYearFilter("2022");
     props.changeMonthFilter("");
+    props.changeYearFilter("2022");
   }
 
   return (

@@ -53,7 +53,7 @@ function Signup() {
   return (
     <div className="main-content">
       <Form className="signup-form">
-        <h2 className="form-title">Create a Chat-App account</h2>
+        <h2 className="form-title">Create a Calorie-Tracker account</h2>
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label className="form-subtitle">Email address</Form.Label>

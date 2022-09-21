@@ -52,7 +52,7 @@ function WeightGraph() {
   //State that holds month filter
   const [monthFilter, setMonthFilter] = useState("");
   //State that holds year filter
-  const [yearFilter, setYearFilter] = useState("");
+  const [yearFilter, setYearFilter] = useState("2022");
 
   //Using useEffect to stop infinite loop
   //Retrieving weight entries from firestore
@@ -126,12 +126,26 @@ function WeightGraph() {
   //Calculates weight average for each month and set's the weightAverage state
   function calculateWeightAveragesYear() {
     let weights = [];
+
+    //Create a sublist based upon yearFilter
     for (let index = 0; index < 12; index++) {
       let total = 0;
-      weightObject[Object.keys(weightObject)[index]].forEach((weight) => {
+      const sublist = weightObject[Object.keys(weightObject)[index]].filter(
+        (weight) => {
+          const [day, month, year] = weight[1].split("-");
+          if (year === yearFilter) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      );
+      //Add each weight from sublist to a total
+      sublist.forEach((weight) => {
         total += parseFloat(weight);
       });
-      total = total / weightObject[Object.keys(weightObject)[index]].length;
+      //Get average of total
+      total = total / sublist.length;
       weights[index] = total;
     }
     setWeightAverages(weights);
@@ -140,7 +154,10 @@ function WeightGraph() {
   //Calculates weight average for each day of the month and set's the weightAverage state
   function calculateWeightAveragesMonth() {
     if (monthFilter.length <= 0) return;
+
     let weights = [];
+    let sublist = [];
+
     //Sort weights by date
     weightObject[monthFilter].sort(sortByDate);
     function sortByDate(a, b) {
@@ -151,17 +168,32 @@ function WeightGraph() {
       }
     }
 
-    for (let index = 0; index < weightObject[monthFilter].length; index++) {
+    //Create a sublist of weights based upon yearFilter
+    for (let index = 0; index < 12; index++) {
+      let total = 0;
+      sublist = weightObject[monthFilter].filter((weight) => {
+        const [day, month, year] = weight[1].split("-");
+        if (year === yearFilter) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    }
+
+    //Set the weight for a specific day of the month to a weight found in the weights list at the specified index
+    for (let index = 0; index < sublist.length; index++) {
       //Get the day of each weight entry (02 becomes 2 etc)
       let day =
         weightObject[monthFilter][index][1][0] +
         weightObject[monthFilter][index][1][1];
       weights[parseInt(day) - 1] = weightObject[monthFilter][index][0];
     }
+
     setWeightAverages(weights);
   }
 
-  //Called whenever monthFilter state changes (callback)
+  //Called whenever monthFilter or yearFilter state changes (callback)
   useEffect(() => {
     if (monthFilter.length > 0) {
       calculateWeightAveragesMonth();
@@ -169,23 +201,14 @@ function WeightGraph() {
       calculateWeightAveragesYear();
     }
     // eslint-disable-next-line
-  }, [monthFilter]);
-
-  //Called whenever monthFilter state changes (callback)
-  useEffect(() => {
-    if (yearFilter.length > 0) {
-      calculateWeightAveragesMonth();
-    } else {
-      calculateWeightAveragesYear();
-    }
-    // eslint-disable-next-line
-  }, [yearFilter]);
+  }, [yearFilter, monthFilter]);
 
   //Changes month filter
   function handleChangeMonthFilter(month) {
     setMonthFilter(month);
   }
 
+  //Changes year filter
   function handleChangeYearFilter(year) {
     setYearFilter(year);
   }
@@ -247,6 +270,7 @@ function WeightGraph() {
     plugins: {
       legend: {
         position: "top",
+        align: "end",
       },
       title: {
         display: false,
@@ -263,6 +287,8 @@ function WeightGraph() {
         data: labels.map((element, index) => weightAverages[index]),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
+        cubicInterpolationMode: "monotone",
+        spanGaps: true,
       },
     ],
   };
