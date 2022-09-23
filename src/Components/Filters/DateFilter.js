@@ -3,6 +3,10 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 import React, { useState } from "react";
 
+/**
+ * @param props Props passed down by WeightGraph.js
+ * @returns Graph and weight entry filters
+ */
 function DateFilter(props) {
   //State that holds month filter
   const [monthFilter, setMonthFilter] = useState("");
@@ -10,16 +14,25 @@ function DateFilter(props) {
   //State that holds year filter
   const [yearFilter, setYearFilter] = useState("2022");
 
+  /**
+   * @param eventKey The month filter to switch to
+   */
   function changeMonthFilter(eventKey) {
     setMonthFilter(eventKey);
     props.changeMonthFilter(eventKey);
   }
 
+  /**
+   * @param eventKey The year filter to switch to
+   */
   function changeYearFilter(eventKey) {
     setYearFilter(eventKey);
     props.changeYearFilter(eventKey);
   }
 
+  /**
+   * Resets year and month filters
+   */
   function resetFilters() {
     setMonthFilter("");
     setYearFilter("2022");

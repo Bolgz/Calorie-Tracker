@@ -1,6 +1,6 @@
 import "./WeightGraph.css";
 import WeightEntryForm from "./WeightEntryForm";
-import WeightEntry from "./WeightEntry";
+import WeightEntries from "./WeightEntries";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,6 +28,10 @@ ChartJS.register(
   Legend
 );
 
+/**
+ * @returns All elements of the page relating to the weight graph
+ * (Filters, graph, weight entry form & weight entry list)
+ */
 function WeightGraph() {
   //State that stores each weight for a given month
   const [weightObject, setWeightObject] = useState({
@@ -54,8 +58,10 @@ function WeightGraph() {
   //State that holds year filter
   const [yearFilter, setYearFilter] = useState("2022");
 
-  //Using useEffect to stop infinite loop
-  //Retrieving weight entries from firestore
+  /**
+   * Retrieving weight entries from firestore
+   * - Using useEffect to stop infinite loop -
+   */
   useEffect(() => {
     const auth = getAuth();
     utilities
@@ -64,6 +70,11 @@ function WeightGraph() {
     // eslint-disable-next-line
   }, []);
 
+  /**
+   * Populates our allEntries list with all entries grabbed from firestore.
+   * Also populates our weight entry object which stores data in the form {Month: [[weight, date], [weight, date]]}
+   * @param entry The entry to add to allEntries and the weightEntry Object
+   */
   function populate(entry) {
     //Adds each entry to the allEntries state
     setAllEntries((prevState) => [...prevState, [entry.date, entry.weight]]);
@@ -72,6 +83,16 @@ function WeightGraph() {
 
     //Sets the weightObject state to the newly created object
     setWeightObject(newWeightObject);
+  }
+
+  /**
+   * Called on page refresh/first load. Populates weight entry object with entries from firestore
+   * @param entries A list of weight entries retried from firestore
+   */
+  function populateWeightEntryObject(entries) {
+    //For each entry grabbed from firestore call populate
+    entries.forEach((entry) => populate(entry));
+
     //If there is no month filter, calculate average monthly weight
     if (monthFilter === "") {
       calculateWeightAveragesYear();
@@ -81,18 +102,31 @@ function WeightGraph() {
     }
   }
 
-  //This is called on page refresh/first load. Populates weight entry object with entries in firestore
-  function populateWeightEntryObject(entries) {
-    //For each entry grabbed from firestore call populate
-    entries.forEach((entry) => populate(entry));
-  }
-
-  //Passed as prop to WeightEntry.js - retrieves weight entry data
+  /**
+   * Passed as prop to WeightEntryForm.js - retrieves weight entry data
+   * @param _weight The weight entered into the weight entry form
+   * @param _date The date entered into the weight entry form
+   */
   function handleWeightEntry(_weight, _date) {
+    //Create entry object
     const entry = { weight: _weight, date: _date };
     populate(entry);
+
+    //If there is no month filter, calculate average monthly weight
+    if (monthFilter === "") {
+      calculateWeightAveragesYear();
+      //If there is a month filter, calculate weight average for each day of month
+    } else {
+      calculateWeightAveragesMonth();
+    }
   }
 
+  /**
+   * Passed as prop to WeightEntries.js -> WeightEntryCard.js
+   * This function removes a weight entry from the graph, weight list and weight object
+   * @param date The date of the entry to remove
+   * @param weight The weight of the entry to remove
+   */
   function removeWeightEntry(date, weight) {
     //Removes entry from all weight entries list
     let copyEntries = allEntries.filter(
@@ -105,7 +139,6 @@ function WeightGraph() {
     utilities.removeWeightEntry(date, weight, auth.currentUser.uid);
 
     //Removes entry from weight object (so that graph can be updated)
-    //Returns an object with each month as a key and a list of weights for that month as the value
     const newWeightObject = graphUtilities.removeWeightEntry(
       weight,
       date,
@@ -114,6 +147,7 @@ function WeightGraph() {
 
     //Sets the weightObject state to the newly created object
     setWeightObject(newWeightObject);
+
     //If there is no month filter, calculate average monthly weight
     if (monthFilter === "") {
       calculateWeightAveragesYear();
@@ -123,14 +157,17 @@ function WeightGraph() {
     }
   }
 
-  //Calculates weight average for each month and set's the weightAverage state
+  /**
+   * Calculates weight average for each month of the year and set's the weightAverage state
+   */
   function calculateWeightAveragesYear() {
     let weights = [];
+    let sublist = [];
 
     //Create a sublist based upon yearFilter
     for (let index = 0; index < 12; index++) {
       let total = 0;
-      const sublist = weightObject[Object.keys(weightObject)[index]].filter(
+      sublist = weightObject[Object.keys(weightObject)[index]].filter(
         (weight) => {
           const [day, month, year] = weight[1].split("-");
           if (year === yearFilter) {
@@ -151,7 +188,9 @@ function WeightGraph() {
     setWeightAverages(weights);
   }
 
-  //Calculates weight average for each day of the month and set's the weightAverage state
+  /**
+   * Calculates weight average for each day of the month and set's the weightAverage state
+   */
   function calculateWeightAveragesMonth() {
     if (monthFilter.length <= 0) return;
 
@@ -181,7 +220,7 @@ function WeightGraph() {
       });
     }
 
-    //Set the weight for a specific day of the month to a weight found in the weights list at the specified index
+    //Set the weight for a day of the month to a weight found in the weights list at the specified index
     for (let index = 0; index < sublist.length; index++) {
       //Get the day of each weight entry (02 becomes 2 etc)
       let day =
@@ -193,7 +232,9 @@ function WeightGraph() {
     setWeightAverages(weights);
   }
 
-  //Called whenever monthFilter or yearFilter state changes (callback)
+  /**
+   * Called whenever monthFilter or yearFilter state changes (callback)
+   */
   useEffect(() => {
     if (monthFilter.length > 0) {
       calculateWeightAveragesMonth();
@@ -203,17 +244,25 @@ function WeightGraph() {
     // eslint-disable-next-line
   }, [yearFilter, monthFilter]);
 
-  //Changes month filter
+  /**
+   * Passed as prop to DateFilter.js. Sets monthFilter state
+   * @param month The month to change the monthFilter to
+   */
   function handleChangeMonthFilter(month) {
     setMonthFilter(month);
   }
 
-  //Changes year filter
+  /**
+   * Passed as prop to DateFilter.js. Sets yearFilter state
+   * @param year The year to change the monthFilter to
+   */
   function handleChangeYearFilter(year) {
     setYearFilter(year);
   }
 
-  //Graph labels (X Axis)
+  /**
+   * Graph labels (X-Axis). Only used if there is a valid month filter
+   */
   let monthLabels = [
     "01",
     "02",
@@ -247,6 +296,9 @@ function WeightGraph() {
     "30",
     "31",
   ];
+  /**
+   * Graph labels (X-Axis). Only used if there is not a valid month filter
+   */
   let yearLabels = [
     "January",
     "February",
@@ -262,6 +314,7 @@ function WeightGraph() {
     "December",
   ];
 
+  //Choose which labels to use for the graph X-Axis based upon filters
   let labels = monthFilter === "" ? yearLabels : monthLabels;
 
   //Graph options
@@ -289,6 +342,7 @@ function WeightGraph() {
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         cubicInterpolationMode: "monotone",
         spanGaps: true,
+        radius: 5,
       },
     ],
   };
@@ -302,7 +356,12 @@ function WeightGraph() {
       <Line options={options} data={graphData} className="graph" />
       <div className="weight-entry-section">
         <WeightEntryForm addWeightEntry={handleWeightEntry} />
-        <WeightEntry entries={allEntries} remove={removeWeightEntry} />
+        <WeightEntries
+          entries={allEntries}
+          remove={removeWeightEntry}
+          monthFilter={monthFilter}
+          yearFilter={yearFilter}
+        />
       </div>
     </div>
   );
