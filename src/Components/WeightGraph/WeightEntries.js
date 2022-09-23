@@ -52,6 +52,7 @@ function WeightEntries(props) {
 
   //Filter the entries by year
   const filteredEntriesYear = props.entries.filter((entry) => {
+    // eslint-disable-next-line
     const [day, month, year] = entry[0].split("-");
     if (year === props.yearFilter) {
       return true;
@@ -61,7 +62,9 @@ function WeightEntries(props) {
   });
 
   //Filter entries by month (only once they have been filtered by year)
+  // eslint-disable-next-line
   const filteredEntriesMonth = filteredEntriesYear.filter((entry) => {
+    // eslint-disable-next-line
     const [day, month, year] = entry[0].split("-");
     if (month === monthFilter) {
       return true;
@@ -69,6 +72,52 @@ function WeightEntries(props) {
       return false;
     }
   });
+
+  /**
+   * Sorts entries by month
+   * @param a First month entry comparator
+   * @param b Second month entry comparator
+   */
+  function sortByMonth(a, b) {
+    //Get month of each weight entry
+    // eslint-disable-next-line
+    const [aDay, aMonth, aYear] = a[0].split("-");
+    // eslint-disable-next-line
+    const [bDay, bMonth, bYear] = b[0].split("-");
+
+    if (aMonth === bMonth) {
+      return 0;
+    } else {
+      return aMonth > bMonth ? -1 : 1;
+    }
+  }
+
+  /**
+   * Sorts entries by day
+   * @param a First day entry comparator
+   * @param b Second day entry comparator
+   */
+  function sortByDay(a, b) {
+    //Get day of each weight entry
+    // eslint-disable-next-line
+    const [aDay, aMonth, aYear] = a[0].split("-");
+    // eslint-disable-next-line
+    const [bDay, bMonth, bYear] = b[0].split("-");
+
+    if (aDay === bDay) {
+      return 0;
+    } else {
+      return aDay > bDay ? -1 : 1;
+    }
+  }
+
+  //If there is not a month filter sort by month
+  if (monthFilter.length <= 1) {
+    filteredEntriesYear.sort(sortByMonth);
+  } else {
+    //If there is  a month filter sort by day
+    filteredEntriesMonth.sort(sortByDay);
+  }
 
   //If there is no month filter, show all entries filtered by year
   if (monthFilter.length <= 1) {
