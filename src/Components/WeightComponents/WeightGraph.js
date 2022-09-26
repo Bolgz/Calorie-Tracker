@@ -169,6 +169,7 @@ function WeightGraph() {
       let total = 0;
       sublist = weightObject[Object.keys(weightObject)[index]].filter(
         (weight) => {
+          // eslint-disable-next-line
           const [day, month, year] = weight[1].split("-");
           if (year === yearFilter) {
             return true;
@@ -209,8 +210,8 @@ function WeightGraph() {
 
     //Create a sublist of weights based upon yearFilter
     for (let index = 0; index < 12; index++) {
-      let total = 0;
       sublist = weightObject[monthFilter].filter((weight) => {
+        // eslint-disable-next-line
         const [day, month, year] = weight[1].split("-");
         if (year === yearFilter) {
           return true;

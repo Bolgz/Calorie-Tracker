@@ -124,7 +124,7 @@ function WeightEntries(props) {
     return (
       <div className="weight_entries_section">
         <h4 className="weight-entries-title">
-          All Weight Entries - {props.yearFilter}
+          Weight Entries - {props.yearFilter}
         </h4>
         <div className="weight_entry_scroll_box">
           {filteredEntriesYear.map((weightEntry) => (

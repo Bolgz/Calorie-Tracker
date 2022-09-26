@@ -1,0 +1,36 @@
+.macro-main-section {
+  margin-top: 60px;
+  margin-left: -50px;
+}
+
+.macro-doughnut {
+  min-height: 200px;
+  max-height: 200px;
+  min-width: 650px;
+  max-width: 650px;
+  margin-left: -200px;
+  margin-top: 30px;
+}
+
+.macro-counter-section {
+  display: flex;
+  width: 150px;
+  height: 200px;
+  flex-direction: column;
+  margin: auto;
+  margin-left: 270px;
+  margin-top: -190px;
+  justify-content: space-evenly;
+}
+
+.macro-counter-text {
+  display: inline;
+  margin-left: 8px;
+}
+
+.macro-counter-value {
+  font-size: 18px;
+  margin-left: 36px;
+  margin-top: -3px;
+  font-weight: bold;
+}

@@ -1,9 +1,11 @@
 import "./Home.css";
-import WeightGraph from "../WeightGraph/WeightGraph";
+import WeightGraph from "../WeightComponents/WeightGraph";
+import CalorieChart from "../CalorieComponents/CalorieChart";
 
 function Home() {
   return (
     <div>
+      <CalorieChart />
       <WeightGraph />
     </div>
   );

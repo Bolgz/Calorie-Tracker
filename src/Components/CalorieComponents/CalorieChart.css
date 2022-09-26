@@ -1,0 +1,45 @@
+.calendar {
+  border-radius: 5%;
+  border-width: 2px;
+  border-radius: 12px;
+  box-shadow: 0 1px 7px;
+  margin: auto;
+  width: 400px;
+  background-color: rgb(255, 202, 196);
+}
+
+.calorie-container {
+  margin: auto;
+  margin-top: 60px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  border-color: rgb(0, 0, 0);
+  padding: 2%;
+  width: 845px;
+}
+
+.date-selection {
+  margin-left: 400px;
+  margin-top: -75px;
+}
+
+.date-selection-form {
+  display: flex;
+  justify-content: space-evenly;
+  width: 350px;
+}
+
+.date-submit-button {
+  height: 39px;
+}
+
+.date-selection-input {
+  width: 200px;
+}
+
+.doughnut-container {
+  display: flex;
+  margin-left: -30px;
+  margin-top: -50px;
+}
