@@ -1,0 +1,18 @@
+.calorie-entry {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  border-color: rgb(0, 0, 0);
+  width: 415px;
+  height: 388px;
+  position: absolute;
+  top: 117px;
+  left: 74%;
+}
+
+.calorie-entry-form-field {
+  margin-bottom: 15px;
+  margin-top: 5px;
+  margin-left: 20px;
+  width: 373px;
+}

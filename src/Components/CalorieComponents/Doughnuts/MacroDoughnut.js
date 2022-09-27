@@ -24,8 +24,6 @@ function MacroDoughnut(props) {
     const fatAllowanceCalories = props.baseGoal * props.baseFats;
     //Total grams of fat allowed per day
     fatAllowance = Math.round(fatAllowanceCalories / 9);
-
-    console.log(carbAllowance, proteinAllowance, fatAllowance);
   }
 
   calculateMacrosAllowance(props);

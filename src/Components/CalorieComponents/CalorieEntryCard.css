@@ -1,0 +1,17 @@
+.calorie_entry_card {
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 2px;
+  width: 775px;
+  margin: auto;
+  margin-bottom: 10px;
+  padding: 8px;
+  display: flex;
+}
+
+.calorie_entry_value {
+  display: inline;
+  float: left;
+  font-size: large;
+  margin: auto;
+}

@@ -59,12 +59,34 @@ export async function addWeightEntry(_weightDate, _weightValue, _userId) {
   await updateDoc(userRef, { weightEntries: newWeightEntryList });
 }
 
+//Add calorie entry in Firestore
+export async function addCalorieEntry(_calorieEntryObject, _userId) {
+  const userRef = doc(getFirestore(), "users", _userId);
+  const docSnap = await getDoc(userRef);
+
+  //const newCalorieEntry = { date: _weightDate, weight: _weightValue };
+  const newCalorieEntryList = [
+    ...docSnap.data().calorieEntries,
+    _calorieEntryObject,
+  ];
+
+  await updateDoc(userRef, { calorieEntries: newCalorieEntryList });
+}
+
 //Get weightentry list of user from Firestore
 export async function getWeightEntryList(_userId) {
   const userRef = doc(getFirestore(), "users", _userId);
   const docSnap = await getDoc(userRef);
 
   return docSnap.data().weightEntries;
+}
+
+//Get calorie entry list of user from Firestore
+export async function getCalorieEntryList(_userId) {
+  const userRef = doc(getFirestore(), "users", _userId);
+  const docSnap = await getDoc(userRef);
+
+  return docSnap.data().calorieEntries;
 }
 
 export async function removeWeightEntry(_weightDate, _weightValue, _userId) {
@@ -78,4 +100,25 @@ export async function removeWeightEntry(_weightDate, _weightValue, _userId) {
     );
 
   await updateDoc(userRef, { weightEntries: newWeightEntryList });
+}
+
+export async function removeCalorieEntry(_entryToRemove, _userId) {
+  const userRef = doc(getFirestore(), "users", _userId);
+  const docSnap = await getDoc(userRef);
+
+  const newCalorieEntryList = docSnap
+    .data()
+    .calorieEntries.filter(
+      (entry) =>
+        !(
+          entry._selectedDate === _entryToRemove._selectedDate &&
+          entry._proteinAmount === _entryToRemove._proteinAmount &&
+          entry._nameOfFood === _entryToRemove._nameOfFood &&
+          entry._fatAmount === _entryToRemove._fatAmount &&
+          entry._carbsAmount === _entryToRemove._carbsAmount &&
+          entry._caloriesAmount === _entryToRemove._caloriesAmount
+        )
+    );
+
+  await updateDoc(userRef, { calorieEntries: newCalorieEntryList });
 }

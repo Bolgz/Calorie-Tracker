@@ -1,0 +1,25 @@
+.calorie-entry-list-container {
+  margin: auto;
+  margin-top: 20px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  border-color: rgb(0, 0, 0);
+  padding: 2%;
+  width: 845px;
+}
+
+.calorie-list-header-container {
+  width: 775px;
+  margin: auto;
+  padding: 8px;
+  display: flex;
+}
+
+.calorie-list-header-text {
+  display: inline;
+  float: left;
+  font-size: large;
+  margin-left: 44px;
+  margin-right: 37px;
+}
