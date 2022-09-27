@@ -10,6 +10,9 @@ import Home from "./Components/Home/Home";
 import Signup from "./Components/Signup/Signup";
 import Login from "./Components/Login/Login";
 
+/**
+ * Firebase configuration (needs to go in .env file)
+ */
 const firebaseConfig = {
   apiKey: "AIzaSyCOjebQFkKFmO6H0YPVgOrLEvbg84ructA",
   authDomain: "calorie-tracker-f7573.firebaseapp.com",
@@ -20,13 +23,18 @@ const firebaseConfig = {
   measurementId: "G-110GVQCCLL",
 };
 
+//Initialise firebase application
 // eslint-disable-next-line
 const app = initializeApp(firebaseConfig);
 
+/**
+ * @return Appropriate page depending on login status (uses react router)
+ */
 function App() {
+  //Is the user currently logged in
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  //Using useEffect to check if the user is logged in stops inifite loop
+  //Using useEffect to check if the user is logged in
   useEffect(() => {
     //Checks if current user is logged in
     const auth = getAuth();
@@ -43,6 +51,7 @@ function App() {
           }
         });
 
+        //User is logged in
         setIsLoggedIn(true);
       } else {
         //User is not logged in
@@ -51,8 +60,7 @@ function App() {
     });
   }, []);
 
-  // eslint-disable-next-line
-  const auth = getAuth();
+  //If user is logged in render Home page and Navigation bar
   if (isLoggedIn) {
     return (
       <Routes>

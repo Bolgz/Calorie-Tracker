@@ -8,17 +8,25 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-//Add user to Firestore
+/**
+ * Adds user to Firestore
+ * @param _userId The ID of the user to add to firestore database. Also generates weightEntries & calorieEntries fields
+ */
 export async function addUser(_userId) {
   await setDoc(doc(getFirestore(), "users", _userId), {
     userid: _userId,
     weightEntries: [],
+    calorieEntries: [],
   });
 }
 
-// Check if user exists in Firestore
-export async function getUser(userId) {
-  const docRef = await doc(getFirestore(), "users", userId);
+/**
+ * Checks if user exists in Firestore
+ * @param _userId The ID of the user to check the database for
+ * @return True if user exists & false if not
+ */
+export async function getUser(_userId) {
+  const docRef = await doc(getFirestore(), "users", _userId);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
@@ -28,7 +36,11 @@ export async function getUser(userId) {
   }
 }
 
-//Return data of given name userID
+/**
+ * Return data from given userID
+ * @param _userId The ID of the user to retrieve the data from
+ * @return User data if it exists, false if not
+ */
 export async function getUserDataFromUserId(_userId) {
   const querySnapshot = await getDocs(collection(getFirestore(), "users"));
 
@@ -48,7 +60,12 @@ export async function getUserDataFromUserId(_userId) {
   return exists;
 }
 
-//Add weightentry in Firestore
+/**
+ * Add weight entry in Firestore
+ * @param _userId The ID of the user to add the weightEntry for
+ * @param _weightDate The date of the weight entry
+ * @param _weightValue The value of the weight entry
+ */
 export async function addWeightEntry(_weightDate, _weightValue, _userId) {
   const userRef = doc(getFirestore(), "users", _userId);
   const docSnap = await getDoc(userRef);
@@ -59,7 +76,11 @@ export async function addWeightEntry(_weightDate, _weightValue, _userId) {
   await updateDoc(userRef, { weightEntries: newWeightEntryList });
 }
 
-//Add calorie entry in Firestore
+/**
+ * Add calorie entry in Firestore
+ * @param _userId The ID of the user to add the calorie entry for
+ * @param _calorieEntryObject The calorie entry object to add
+ */
 export async function addCalorieEntry(_calorieEntryObject, _userId) {
   const userRef = doc(getFirestore(), "users", _userId);
   const docSnap = await getDoc(userRef);
@@ -73,7 +94,11 @@ export async function addCalorieEntry(_calorieEntryObject, _userId) {
   await updateDoc(userRef, { calorieEntries: newCalorieEntryList });
 }
 
-//Get weightentry list of user from Firestore
+/**
+ * Retrieves list of weight entries for a given user
+ * @param _userId The ID of the user to retrieve weight entries for
+ * @return The weight entries for a given user
+ */
 export async function getWeightEntryList(_userId) {
   const userRef = doc(getFirestore(), "users", _userId);
   const docSnap = await getDoc(userRef);
@@ -81,7 +106,11 @@ export async function getWeightEntryList(_userId) {
   return docSnap.data().weightEntries;
 }
 
-//Get calorie entry list of user from Firestore
+/**
+ * Retrieves list of calorie entries for a given user
+ * @param _userId The ID of the user to retrieve calorie entries for
+ * @return The calorie entries for a given user
+ */
 export async function getCalorieEntryList(_userId) {
   const userRef = doc(getFirestore(), "users", _userId);
   const docSnap = await getDoc(userRef);
@@ -89,6 +118,12 @@ export async function getCalorieEntryList(_userId) {
   return docSnap.data().calorieEntries;
 }
 
+/**
+ * Removes a weight entry for a given user
+ * @param _userId The ID of the user to remove the weight entry for
+ * @param _weightDate The date of the weight entry to remove
+ * @param _weightValue The value of the weight entry to remove
+ */
 export async function removeWeightEntry(_weightDate, _weightValue, _userId) {
   const userRef = doc(getFirestore(), "users", _userId);
   const docSnap = await getDoc(userRef);
@@ -102,6 +137,11 @@ export async function removeWeightEntry(_weightDate, _weightValue, _userId) {
   await updateDoc(userRef, { weightEntries: newWeightEntryList });
 }
 
+/**
+ * Removes a calorie entry for a given user
+ * @param _userId The ID of the user to remove the weight entry for
+ * @param _entryToRemove The calorie entry to remove for the given user
+ */
 export async function removeCalorieEntry(_entryToRemove, _userId) {
   const userRef = doc(getFirestore(), "users", _userId);
   const docSnap = await getDoc(userRef);

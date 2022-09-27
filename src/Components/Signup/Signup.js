@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 
+/**
+ * @returns The user signup page
+ */
 function Signup() {
   //State for email and password
   const [email, setEmail] = useState("");
@@ -14,7 +17,9 @@ function Signup() {
   //State for if an signup error occurs
   const [signupError, setSignupError] = useState("");
 
-  //Handles account creation
+  /**
+   * Handles account creation with firebase
+   */
   function createUserAccount() {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
@@ -28,7 +33,10 @@ function Signup() {
       });
   }
 
-  //Gets the appropriate error message for the signup error
+  /**
+   * Gets the appropriate error message for the signup error
+   * @return The signup error message
+   */
   function getSignupErrorMessage() {
     if (signupError === "Firebase: Error (auth/email-already-in-use).") {
       return <p className="error-message-signup">Email already in use</p>;

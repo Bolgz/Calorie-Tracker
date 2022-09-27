@@ -1,6 +1,14 @@
+/**
+ * Adds a weight entry to a weightObject - Called in WeightGraph.js
+ * @param entry The weight entry to add to the weightObject
+ * @param weightObject The weightObject to add the entry to
+ */
 export function populate(entry, weightObject) {
+  //Get the month of the new weight entry
   const month = entry.date[3] + entry.date[4];
+  //Create a copy of the weight object
   let copyObject = weightObject;
+  //Push the new entry to the copy object based upon it's month
   switch (month) {
     case "01":
       copyObject.January.push([entry.weight, entry.date]);
@@ -44,6 +52,12 @@ export function populate(entry, weightObject) {
   return copyObject;
 }
 
+/**
+ * Find the index of a given weight entry
+ * @param weightListMonth The list of weight entries for a given month
+ * @param weightDateInput The weightObject to search for
+ * @return Index of weight object if it was found, false if not
+ */
 function findIndexOfWeightDate(weightListMonth, weightDateInput) {
   for (var index = 0; index < weightListMonth.length; index++) {
     if (
@@ -56,6 +70,13 @@ function findIndexOfWeightDate(weightListMonth, weightDateInput) {
   return false; // Not found
 }
 
+/**
+ * Removes weight entry from the weight entry object
+ * @param weight The weight of the entry to remove
+ * @param date The date of the entry to remove
+ * @param weightObject The weight object to remove the weight entry from
+ * @return The new weight object with the given entry removed
+ */
 export function removeWeightEntry(weight, date, weightObject) {
   const month = date[3] + date[4];
   let copyObject = weightObject;

@@ -11,6 +11,9 @@ import {
 } from "firebase/auth";
 import React, { useState } from "react";
 
+/**
+ * @returns The login page
+ */
 function Login() {
   //State for email and password
   const [email, setEmail] = useState("");
@@ -19,7 +22,9 @@ function Login() {
   //State for if an login error occurs
   const [loginError, setLoginError] = useState(false);
 
-  //Logs in users and sets their authentication persistence
+  /**
+   * Logs in users and sets their authentication persistence
+   */
   function setAuthPersistence() {
     const auth = getAuth();
     setPersistence(auth, browserLocalPersistence)

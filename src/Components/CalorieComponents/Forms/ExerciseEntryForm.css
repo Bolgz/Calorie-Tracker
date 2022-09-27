@@ -1,0 +1,18 @@
+.exercise-entry {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  border-color: rgb(0, 0, 0);
+  width: 420px;
+  height: 220px;
+  position: absolute;
+  top: 520px;
+  left: 74%;
+}
+
+.exercise-entry-form-field {
+  margin-bottom: 15px;
+  margin-top: 5px;
+  margin-left: 20px;
+  width: 380px;
+}

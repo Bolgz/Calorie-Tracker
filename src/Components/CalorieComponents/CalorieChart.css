@@ -21,7 +21,7 @@
 
 .date-selection {
   margin-left: 400px;
-  margin-top: -75px;
+  margin-top: -95px;
 }
 
 .date-selection-form {
@@ -30,12 +30,13 @@
   width: 350px;
 }
 
-.date-submit-button {
-  height: 39px;
+.date-selection-input {
+  width: 250px;
 }
 
-.date-selection-input {
-  width: 200px;
+.date-selection-input-lable {
+  margin-bottom: -10px;
+  margin-left: 3px;
 }
 
 .doughnut-container {

@@ -4,7 +4,34 @@ import { FaFlag } from "react-icons/fa";
 import { FaPizzaSlice } from "react-icons/fa";
 import { FaFire } from "react-icons/fa";
 
+/**
+ * @param props Props passed down from the CalorieChart.js component
+ * @return The 'remaining calorie' doughnut along with the base goal, food and exercise icons & values
+ */
 function CalorieDoughnut(props) {
+  //Total calories consumed on the selected day
+  let totalCalories = 0;
+  //Total calories burned on the selected day
+  let totalExercise = 0;
+
+  /**
+   * Filter entries by selected date & then add up amount of calories consumed & calories burned
+   */
+  function filterAndFindTotalCalories() {
+    const filteredEntries = props.entries.filter(
+      (entry) => entry._selectedDate === props.selectedDate
+    );
+    filteredEntries.forEach((entry) => {
+      if (entry._nameOfFood === undefined) {
+        totalExercise += parseInt(entry._caloriesAmount);
+      } else {
+        totalCalories += parseInt(entry._caloriesAmount);
+      }
+    });
+  }
+
+  filterAndFindTotalCalories();
+
   //Graph options
   const options = {
     responsive: true,
@@ -18,11 +45,12 @@ function CalorieDoughnut(props) {
     },
   };
 
+  //Data passed to the calorie doughnut
   const data = {
     labels: ["Calories", "Remaining Calories"],
     datasets: [
       {
-        data: [props.food, props.baseGoal - props.food + props.exercise],
+        data: [totalCalories, props.baseGoal - totalCalories + totalExercise],
         backgroundColor: ["rgba(255, 99, 132, 1)", "rgba(255, 99, 132, 0.25)"],
         borderColor: ["rgba(255, 99, 132, 0.5)"],
         borderWidth: 0,
@@ -36,7 +64,7 @@ function CalorieDoughnut(props) {
       <Doughnut data={data} options={options} className="calorie-doughnut" />
       <div className="calories-remaining-text-container">
         <p className="calories-remaining-text-calories">
-          {props.baseGoal - props.food + props.exercise}
+          {props.baseGoal - totalCalories + totalExercise}
         </p>
         <p className="calories-remaining-text-remaining">Remaining</p>
       </div>
@@ -50,13 +78,13 @@ function CalorieDoughnut(props) {
         <div>
           <FaPizzaSlice size={"20"} />
           <p className="counter-text">Food</p>
-          <p className="counter-value">{props.food}</p>
+          <p className="counter-value">{totalCalories}</p>
         </div>
 
         <div>
           <FaFire size={"20"} />
           <p className="counter-text">Exercise</p>
-          <p className="counter-value">{props.exercise}</p>
+          <p className="counter-value">{totalExercise}</p>
         </div>
       </div>
     </div>

@@ -5,7 +5,13 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 
-function NavigationBar(props) {
+/**
+ * @returns The navigation bar at the top of the page
+ */
+function NavigationBar() {
+  /**
+   * Logs the user out
+   */
   function Logout() {
     const auth = getAuth();
     signOut(auth)

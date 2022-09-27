@@ -4,16 +4,27 @@ import Button from "react-bootstrap/Button";
 import React, { useState } from "react";
 import * as ReactDOM from "react-dom";
 
+/**
+ * @param props Props passed down from the CalorieChart.js component
+ * @return The form for entering foods (name, calories, carbs, fats & proteins)
+ */
 function CalorieEntryForm(props) {
+  //Currently selected date
   const [selectedDate, setSelectedDate] = useState(props.selectedDate);
+  //Form data
   const [nameOfFood, setNameOfFood] = useState();
   const [caloriesAmount, setCaloriesAmount] = useState();
   const [carbsAmount, setCarbsAmount] = useState();
   const [fatAmount, setFatAmount] = useState();
   const [proteinAmount, setProteinAmount] = useState();
 
+  /**
+   * Adds food entry to entryObject in CalorieChart.js
+   * @param event Form submission event
+   */
   function handleCalorieEntry(event) {
     event.preventDefault();
+    //Create new entry object
     const entryObject = {
       _selectedDate: selectedDate,
       _nameOfFood: nameOfFood,
@@ -23,8 +34,10 @@ function CalorieEntryForm(props) {
       _proteinAmount: proteinAmount,
     };
 
+    //Adds food entry to entryObject in CalorieChart.js
     props.addEntry(entryObject);
 
+    //Reset form fields
     ReactDOM.findDOMNode(document.getElementById("foodName")).value = "";
     ReactDOM.findDOMNode(document.getElementById("calorieAmount")).value = "";
     ReactDOM.findDOMNode(document.getElementById("carbsAmount")).value = "";
