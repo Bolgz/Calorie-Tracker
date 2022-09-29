@@ -1,15 +1,15 @@
 import "./Home.css";
-import WeightGraph from "../WeightComponents/WeightGraph";
-import CalorieChart from "../CalorieComponents/CalorieChart";
+import CalorieChart from "../../CalorieComponents/CalorieChart";
+import SideBar from "../../Navigation/SideBar";
 
 /**
  * @returns CalorieChart and the WeightGraph
  */
 function Home() {
   return (
-    <div>
+    <div className="home-flex-box">
+      <SideBar />
       <CalorieChart />
-      <WeightGraph />
     </div>
   );
 }

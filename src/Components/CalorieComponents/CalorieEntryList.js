@@ -1,5 +1,5 @@
 import "./CalorieEntryList.css";
-import CalorieEntryCard from "./CalorieEntryCard";
+import CalorieEntryCard from "./Cards/CalorieEntryCard";
 
 /**
  * @param props Passed down from CalorieChart.js
@@ -22,7 +22,7 @@ function CalorieEntryList(props) {
 
   return (
     <div className="calorie-entry-list-container">
-      <h3>Entries - {props.selectedDate}</h3>
+      <h2>Food Entries</h2>
       <div className="calorie-list-header-container">
         <p className="calorie-list-header-text">Name</p>
         <p className="calorie-list-header-text">Calories</p>
@@ -37,7 +37,6 @@ function CalorieEntryList(props) {
           removeEntry={props.removeEntry}
           date={entry._selectedDate}
           name={entry._nameOfFood}
-          exercise={entry._nameOfExercise}
           calories={entry._caloriesAmount}
           carbs={entry._carbsAmount}
           fat={entry._fatAmount}

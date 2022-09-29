@@ -21,17 +21,9 @@ function CalorieEntryCard(props) {
     props.removeEntry(object);
   }
 
-  //Deciding wether to use food name (if food entry) or exercise name (if exercise entry)
-  let nameToUse;
-  if (props.name === undefined) {
-    nameToUse = props.exercise;
-  } else {
-    nameToUse = props.name;
-  }
-
   return (
     <div className="calorie_entry_card">
-      <p className="calorie_entry_value">{nameToUse}</p>
+      <p className="calorie_entry_value">{props.name}</p>
       <p className="calorie_entry_value"> {props.calories}kcal</p>
       <p className="calorie_entry_value">{props.carbs}</p>
       <p className="calorie_entry_value">{props.fat}</p>

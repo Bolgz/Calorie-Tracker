@@ -3,11 +3,9 @@
   border-width: 2px;
   border-radius: 10px;
   border-color: rgb(0, 0, 0);
+  margin-top: 20px;
   width: 420px;
   height: 220px;
-  position: absolute;
-  top: 520px;
-  left: 74%;
 }
 
 .exercise-entry-form-field {

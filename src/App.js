@@ -5,10 +5,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import * as utilities from "./Utilities/FireStoreUtilities.js";
 import { Routes, Route } from "react-router-dom";
-import NavigationBar from "./Components/Navigation/NavigationBar";
-import Home from "./Components/Home/Home";
-import Signup from "./Components/Signup/Signup";
-import Login from "./Components/Login/Login";
+import Home from "./Components/Pages/Home/Home";
+import Signup from "./Components/Pages/Signup/Signup";
+import Login from "./Components/Pages/Login/Login";
+import Account from "./Components/Pages/Account/Account";
+import Goals from "./Components/Pages/Goals/Goals";
+import Progress from "./Components/Pages/Progress/Progress";
 
 /**
  * Firebase configuration (needs to go in .env file)
@@ -68,12 +70,15 @@ function App() {
           path="/"
           element={
             <div>
-              <NavigationBar /> <Home />
+              <Home />
             </div>
           }
         />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/goals" element={<Goals />} />
+        <Route path="/progress" element={<Progress />} />
       </Routes>
     );
     //User is not logged in, only allow access to login and signup pages
@@ -85,6 +90,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           {/**Redirect user to login page if trying to access resitricted content */}
           <Route path="/" element={<Login />} />
+          <Route path="/account" element={<Login />} />
+          <Route path="/goals" element={<Login />} />
+          <Route path="/progress" element={<Login />} />
         </Routes>
       </div>
     );

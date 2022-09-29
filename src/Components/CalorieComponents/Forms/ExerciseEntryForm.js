@@ -15,10 +15,6 @@ function ExerciseEntryForm(props) {
   const [nameOfExercise, setNameOfExercise] = useState();
   const [caloriesAmount, setCaloriesAmount] = useState();
 
-  const carbsAmount = "0";
-  const fatAmount = "0";
-  const proteinAmount = "0";
-
   /**
    * Adds exercise entry to entryObject in CalorieChart.js
    * @param event Form submission event
@@ -30,13 +26,10 @@ function ExerciseEntryForm(props) {
       _selectedDate: selectedDate,
       _nameOfExercise: nameOfExercise,
       _caloriesAmount: caloriesAmount,
-      _carbsAmount: carbsAmount,
-      _fatAmount: fatAmount,
-      _proteinAmount: proteinAmount,
     };
 
     //Adds food entry to entryObject in CalorieChart.js
-    props.addEntry(entryObject);
+    props.addExerciseEntry(entryObject);
 
     //Reset form fields
     ReactDOM.findDOMNode(document.getElementById("exerciseName")).value = "";

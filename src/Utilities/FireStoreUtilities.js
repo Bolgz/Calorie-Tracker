@@ -17,6 +17,7 @@ export async function addUser(_userId) {
     userid: _userId,
     weightEntries: [],
     calorieEntries: [],
+    exerciseEntries: [],
   });
 }
 
@@ -85,13 +86,29 @@ export async function addCalorieEntry(_calorieEntryObject, _userId) {
   const userRef = doc(getFirestore(), "users", _userId);
   const docSnap = await getDoc(userRef);
 
-  //const newCalorieEntry = { date: _weightDate, weight: _weightValue };
   const newCalorieEntryList = [
     ...docSnap.data().calorieEntries,
     _calorieEntryObject,
   ];
 
   await updateDoc(userRef, { calorieEntries: newCalorieEntryList });
+}
+
+/**
+ * Add exercise entry in Firestore
+ * @param _userId The ID of the user to add the exercise entry for
+ * @param _exerciseEntryObject The exercise entry object to add
+ */
+export async function addExerciseEntry(_exerciseEntryObject, _userId) {
+  const userRef = doc(getFirestore(), "users", _userId);
+  const docSnap = await getDoc(userRef);
+
+  const newExerciseEntryList = [
+    ...docSnap.data().exerciseEntries,
+    _exerciseEntryObject,
+  ];
+
+  await updateDoc(userRef, { exerciseEntries: newExerciseEntryList });
 }
 
 /**
@@ -116,6 +133,18 @@ export async function getCalorieEntryList(_userId) {
   const docSnap = await getDoc(userRef);
 
   return docSnap.data().calorieEntries;
+}
+
+/**
+ * Retrieves list of exercise entries for a given user
+ * @param _userId The ID of the user to retrieve exercise entries for
+ * @return The exercise entries for a given user
+ */
+export async function getExerciseEntryList(_userId) {
+  const userRef = doc(getFirestore(), "users", _userId);
+  const docSnap = await getDoc(userRef);
+
+  return docSnap.data().exerciseEntries;
 }
 
 /**
@@ -161,4 +190,27 @@ export async function removeCalorieEntry(_entryToRemove, _userId) {
     );
 
   await updateDoc(userRef, { calorieEntries: newCalorieEntryList });
+}
+
+/**
+ * Removes an exercise entry for a given user
+ * @param _userId The ID of the user to remove the exercise entry for
+ * @param _entryToRemove The exercise entry to remove for the given user
+ */
+export async function removeExerciseEntry(_entryToRemove, _userId) {
+  const userRef = doc(getFirestore(), "users", _userId);
+  const docSnap = await getDoc(userRef);
+
+  const newExerciseEntryList = docSnap
+    .data()
+    .exerciseEntries.filter(
+      (entry) =>
+        !(
+          entry._selectedDate === _entryToRemove._selectedDate &&
+          entry._nameOfExercise === _entryToRemove._nameOfExercise &&
+          entry._caloriesAmount === _entryToRemove._caloriesAmount
+        )
+    );
+
+  await updateDoc(userRef, { exerciseEntries: newExerciseEntryList });
 }

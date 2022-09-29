@@ -35,7 +35,7 @@ function CalorieEntryForm(props) {
     };
 
     //Adds food entry to entryObject in CalorieChart.js
-    props.addEntry(entryObject);
+    props.addFoodEntry(entryObject);
 
     //Reset form fields
     ReactDOM.findDOMNode(document.getElementById("foodName")).value = "";
@@ -48,9 +48,7 @@ function CalorieEntryForm(props) {
   return (
     <div className="calorie-entry">
       <Form onSubmit={handleCalorieEntry} className="calorie-entry-form">
-        <h3 className="calorie-entry-form-field">
-          Add Food Entry - {props.selectedDate}
-        </h3>
+        <h3 className="calorie-entry-form-field">Add Food Entry</h3>
         <Form.Group className="mb-3">
           <Form.Control
             required

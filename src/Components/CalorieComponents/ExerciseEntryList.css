@@ -1,21 +1,21 @@
-.calorie-entry-list-container {
+.exercise-entry-list-container {
   margin-top: 20px;
   border-style: solid;
   border-width: 2px;
   border-radius: 10px;
   border-color: rgb(0, 0, 0);
   padding: 2%;
-  width: 845px;
+  width: 420px;
 }
 
-.calorie-list-header-container {
-  width: 775px;
+.exercise-list-header-container {
+  width: 400;
   margin: auto;
   padding: 8px;
   display: flex;
 }
 
-.calorie-list-header-text {
+.exercise-list-header-text {
   display: inline;
   float: left;
   font-size: large;

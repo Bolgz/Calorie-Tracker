@@ -8,8 +8,10 @@ import CalorieEntryForm from "./Forms/CalorieEntryForm";
 import * as utilities from "../../Utilities/FireStoreUtilities";
 import { getAuth } from "firebase/auth";
 import CalorieEntryList from "./CalorieEntryList";
+import ExerciseEntryList from "./ExerciseEntryList";
 import * as ReactDOM from "react-dom";
 import ExerciseEntryForm from "./Forms/ExerciseEntryForm";
+import ProgressBar from "react-bootstrap/ProgressBar";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -41,20 +43,38 @@ function CalorieChart() {
   const [baseProteins, setBaseProteins] = useState(0.3);
 
   //Calorie entry object (list of objects)
-  const [entryObject, setEntryObject] = useState([]);
+  const [foodEntryObject, setFoodEntryObject] = useState([]);
+
+  //Exercise entry object (list of objects)
+  const [exerciseEntryObject, setExerciseEntryObject] = useState([]);
 
   /**
-   * @param entry The entry to be added to firebase and entry object
+   * @param entry The entry to be added to firebase and food entry object
    */
-  function addEntry(entry) {
+  function addFoodEntry(entry) {
     //Add entry to local list of object
-    let copyObject = [...entryObject];
+    let copyObject = [...foodEntryObject];
     copyObject.push(entry);
-    setEntryObject(copyObject);
+    setFoodEntryObject(copyObject);
 
     //Add entry in firestore
     const auth = getAuth();
     utilities.addCalorieEntry(entry, auth.currentUser.uid);
+  }
+
+  /**
+   * @param entry The entry to be added to firebase and exercise entry object
+   */
+  function addExerciseEntry(entry) {
+    //Add entry to local list of object
+    let copyObject = [...exerciseEntryObject];
+    copyObject.push(entry);
+    setExerciseEntryObject(copyObject);
+
+    //Add entry in firestore
+    const auth = getAuth();
+    //
+    utilities.addExerciseEntry(entry, auth.currentUser.uid);
   }
 
   /**
@@ -76,6 +96,10 @@ function CalorieChart() {
       .getCalorieEntryList(auth.currentUser.uid)
       .then((entries) => populateCalorieEntryObject(entries));
 
+    utilities
+      .getExerciseEntryList(auth.currentUser.uid)
+      .then((entries) => populateExerciseEntryObject(entries));
+
     // eslint-disable-next-line
   }, []);
 
@@ -86,16 +110,26 @@ function CalorieChart() {
   function populateCalorieEntryObject(entries) {
     let entryList = [];
     entries.forEach((entry) => entryList.push(entry));
-    setEntryObject(entryList);
+    setFoodEntryObject(entryList);
   }
 
   /**
-   * Removes entry from firebase & entryObject
+   * Adds each entry from exercise entries to exerciseEntryObject
+   * @param entries Entries to be added to entryObject
+   */
+  function populateExerciseEntryObject(entries) {
+    let entryList = [];
+    entries.forEach((entry) => entryList.push(entry));
+    setExerciseEntryObject(entryList);
+  }
+
+  /**
+   * Removes food entry from firebase & entryObject
    * @param entryToRemove Entry to be removed from firebase & entryObject
    */
   function removeCalorieEntry(entryToRemove) {
     //Remove entry from calorie entry object (locally)
-    let copyEntries = entryObject.filter(
+    let copyEntries = foodEntryObject.filter(
       (entry) =>
         !(
           entry._selectedDate === entryToRemove._selectedDate &&
@@ -106,11 +140,32 @@ function CalorieChart() {
           entry._caloriesAmount === entryToRemove._caloriesAmount
         )
     );
-    setEntryObject(copyEntries);
+    setFoodEntryObject(copyEntries);
 
     //Remove entry from firestore
     const auth = getAuth();
     utilities.removeCalorieEntry(entryToRemove, auth.currentUser.uid);
+  }
+
+  /**
+   * Removes exercise entry from firebase & exerciseEntryObject
+   * @param entryToRemove Entry to be removed from firebase & exerciseEntryObject
+   */
+  function removeExerciseEntry(entryToRemove) {
+    //Remove entry from calorie entry object (locally)
+    let copyEntries = exerciseEntryObject.filter(
+      (entry) =>
+        !(
+          entry._selectedDate === entryToRemove._selectedDate &&
+          entry._nameOfExercise === entryToRemove._nameOfExercise &&
+          entry._caloriesAmount === entryToRemove._caloriesAmount
+        )
+    );
+    setExerciseEntryObject(copyEntries);
+
+    //Remove entry from firestore
+    const auth = getAuth();
+    utilities.removeExerciseEntry(entryToRemove, auth.currentUser.uid);
   }
 
   /**
@@ -126,53 +181,99 @@ function CalorieChart() {
     setSelectedDate(day + "/" + month + "/" + year);
   }
 
+  const now = 15;
+
   return (
     <div>
-      <div className="calorie-container">
-        <h2 style={{ display: "inline" }}>Calories - </h2>
-        <h3 style={{ display: "inline" }}>{selectedDate}</h3>
-        <p>Remaining = Goal - Food + Exercise</p>
-
-        <div className="date-selection">
-          <Form className="date-selection-form">
-            <Form.Group className="mb-3">
-              <Form.Label className="date-selection-input-lable">
-                <h6>Select Date</h6>
-              </Form.Label>
-              <Form.Control
-                required
-                type="date"
-                id="calorieDate"
-                className="date-selection-input"
-                onChange={handleDateSubmit}
-              />
-            </Form.Group>
-          </Form>
+      <div className="chart-and-food-form-container">
+        <div className="calorie-container">
+          <h2 style={{ display: "inline" }}>Calories - </h2>
+          <h3 style={{ display: "inline" }}>{selectedDate}</h3>
+          <p>Remaining = Goal - Food + Exercise</p>
+          <div className="date-selection">
+            <Form className="date-selection-form">
+              <Form.Group className="mb-3">
+                <Form.Label className="date-selection-input-lable">
+                  <h6>Select Date</h6>
+                </Form.Label>
+                <Form.Control
+                  required
+                  type="date"
+                  id="calorieDate"
+                  className="date-selection-input"
+                  onChange={handleDateSubmit}
+                />
+              </Form.Group>
+            </Form>
+          </div>
+          <div className="doughnut-container">
+            <CalorieDoughnut
+              calories={calories}
+              baseGoal={baseGoal}
+              entries={foodEntryObject}
+              selectedDate={selectedDate}
+            />
+            <MacroDoughnut
+              baseCarbs={baseCarbs}
+              baseFats={baseFats}
+              baseProteins={baseProteins}
+              baseGoal={baseGoal}
+              entries={foodEntryObject}
+              selectedDate={selectedDate}
+            />
+          </div>
+          <h2 style={{ marginTop: "35px" }}>Daily Progress</h2>
+          <div className="progress-bar-container">
+            <ProgressBar
+              variant="calories"
+              now={73}
+              label={`Calories - ${now}%`}
+              className="progress-bar-progress"
+            />
+            <ProgressBar
+              variant="carbs"
+              now={23}
+              label={`Carbs - ${now}%`}
+              className="progress-bar-progress"
+            />
+            <ProgressBar
+              variant="fats"
+              now={89}
+              label={`Fats - ${now}%`}
+              className="progress-bar-progress"
+            />
+            <ProgressBar
+              variant="proteins"
+              now={46}
+              label={`Proteins - ${now}%`}
+              className="progress-bar-progress"
+            />
+          </div>
         </div>
-        <div className="doughnut-container">
-          <CalorieDoughnut
-            calories={calories}
-            baseGoal={baseGoal}
-            entries={entryObject}
+        <div>
+          <CalorieEntryForm
             selectedDate={selectedDate}
+            addFoodEntry={addFoodEntry}
           />
-          <MacroDoughnut
-            baseCarbs={baseCarbs}
-            baseFats={baseFats}
-            baseProteins={baseProteins}
-            baseGoal={baseGoal}
-            entries={entryObject}
+          <ExerciseEntryForm
             selectedDate={selectedDate}
+            addExerciseEntry={addExerciseEntry}
           />
         </div>
       </div>
-      <CalorieEntryForm selectedDate={selectedDate} addEntry={addEntry} />
-      <ExerciseEntryForm selectedDate={selectedDate} addEntry={addEntry} />
-      <CalorieEntryList
-        selectedDate={selectedDate}
-        entries={entryObject}
-        removeEntry={removeCalorieEntry}
-      />
+
+      <div className="entries-list-container">
+        <CalorieEntryList
+          selectedDate={selectedDate}
+          entries={foodEntryObject}
+          removeEntry={removeCalorieEntry}
+        />
+        <ExerciseEntryList
+          selectedDate={selectedDate}
+          entries={exerciseEntryObject}
+          removeEntry={removeExerciseEntry}
+        />
+      </div>
     </div>
   );
 }
