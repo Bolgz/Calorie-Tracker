@@ -40,7 +40,11 @@ function ExerciseEntryForm(props) {
 
   return (
     <div className="exercise-entry">
-      <Form onSubmit={handleExerciseEntry} className="exercise-entry-form">
+      <Form
+        onSubmit={handleExerciseEntry}
+        className="exercise-entry-form"
+        autoComplete="off"
+      >
         <h3 className="exercise-entry-form-field">Add Exercise Entry</h3>
         <Form.Group className="mb-3">
           <Form.Control

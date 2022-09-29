@@ -15,14 +15,16 @@ function ExerciseEntryCard(props) {
   }
 
   return (
-    <div className="calorie_entry_card">
-      <p className="calorie_entry_value">{props.name}</p>
-      <p className="calorie_entry_value"> {props.calories}kcal</p>
-      <CloseButton
-        className="weight_entry_remove"
-        onClick={() => removeItem()}
-      />
-    </div>
+    <tr key={Math.random()}>
+      <td>{props.name}</td>
+      <td>
+        {props.calories}{" "}
+        <CloseButton
+          className="weight_entry_remove"
+          onClick={() => removeItem()}
+        />
+      </td>
+    </tr>
   );
 }
 

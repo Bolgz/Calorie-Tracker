@@ -1,5 +1,6 @@
 import "./CalorieEntryCard.css";
 import { CloseButton } from "react-bootstrap";
+import Table from "react-bootstrap/Table";
 
 /**
  * @param props Passed down from CalorieEntryList.js
@@ -22,17 +23,19 @@ function CalorieEntryCard(props) {
   }
 
   return (
-    <div className="calorie_entry_card">
-      <p className="calorie_entry_value">{props.name}</p>
-      <p className="calorie_entry_value"> {props.calories}kcal</p>
-      <p className="calorie_entry_value">{props.carbs}</p>
-      <p className="calorie_entry_value">{props.fat}</p>
-      <p className="calorie_entry_value">{props.protein}</p>
-      <CloseButton
-        className="weight_entry_remove"
-        onClick={() => removeItem()}
-      />
-    </div>
+    <tr key={Math.random()}>
+      <td>{props.name}</td>
+      <td>{props.calories}</td>
+      <td>{props.carbs}</td>
+      <td>{props.fat}</td>
+      <td>
+        {props.protein}{" "}
+        <CloseButton
+          className="weight_entry_remove"
+          onClick={() => removeItem()}
+        />
+      </td>
+    </tr>
   );
 }
 

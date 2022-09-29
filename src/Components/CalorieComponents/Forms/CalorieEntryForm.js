@@ -47,7 +47,11 @@ function CalorieEntryForm(props) {
 
   return (
     <div className="calorie-entry">
-      <Form onSubmit={handleCalorieEntry} className="calorie-entry-form">
+      <Form
+        onSubmit={handleCalorieEntry}
+        className="calorie-entry-form"
+        autoComplete="off"
+      >
         <h3 className="calorie-entry-form-field">Add Food Entry</h3>
         <Form.Group className="mb-3">
           <Form.Control

@@ -1,5 +1,7 @@
 import "./CalorieEntryList.css";
 import CalorieEntryCard from "./Cards/CalorieEntryCard";
+import { CloseButton } from "react-bootstrap";
+import Table from "react-bootstrap/Table";
 
 /**
  * @param props Passed down from CalorieChart.js
@@ -8,6 +10,21 @@ import CalorieEntryCard from "./Cards/CalorieEntryCard";
 function CalorieEntryList(props) {
   //Filtered entries by selected date
   let filteredEntries;
+
+  /**
+   * Removes item from the entry list
+   */
+  function removeItem() {
+    const object = {
+      _selectedDate: props.date,
+      _nameOfFood: props.name,
+      _caloriesAmount: props.calories,
+      _carbsAmount: props.carbs,
+      _fatAmount: props.fat,
+      _proteinAmount: props.protein,
+    };
+    props.removeEntry(object);
+  }
 
   /**
    * Filters entries by selected date
@@ -23,26 +40,31 @@ function CalorieEntryList(props) {
   return (
     <div className="calorie-entry-list-container">
       <h2>Food Entries</h2>
-      <div className="calorie-list-header-container">
-        <p className="calorie-list-header-text">Name</p>
-        <p className="calorie-list-header-text">Calories</p>
-        <p className="calorie-list-header-text">Carbs</p>
-        <p className="calorie-list-header-text">Fat</p>
-        <p className="calorie-list-header-text">Protein</p>
-        <p className="calorie-list-header-text"></p>
-      </div>
-      {filteredEntries.map((entry) => (
-        <CalorieEntryCard
-          key={Math.random()}
-          removeEntry={props.removeEntry}
-          date={entry._selectedDate}
-          name={entry._nameOfFood}
-          calories={entry._caloriesAmount}
-          carbs={entry._carbsAmount}
-          fat={entry._fatAmount}
-          protein={entry._proteinAmount}
-        />
-      ))}
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>Food</th>
+            <th>Calories</th>
+            <th>Carbs</th>
+            <th>Fat</th>
+            <th>Protein</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredEntries.map((entry) => (
+            <CalorieEntryCard
+              key={Math.random()}
+              removeEntry={props.removeEntry}
+              date={entry._selectedDate}
+              name={entry._nameOfFood}
+              calories={entry._caloriesAmount}
+              carbs={entry._carbsAmount}
+              fat={entry._fatAmount}
+              protein={entry._proteinAmount}
+            />
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 }
