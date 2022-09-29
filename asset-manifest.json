@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Calorie-Tracker/static/css/main.2bb69b29.css",
+    "main.js": "/Calorie-Tracker/static/js/main.d67105d6.js",
+    "index.html": "/Calorie-Tracker/index.html",
+    "main.2bb69b29.css.map": "/Calorie-Tracker/static/css/main.2bb69b29.css.map",
+    "main.d67105d6.js.map": "/Calorie-Tracker/static/js/main.d67105d6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2bb69b29.css",
+    "static/js/main.d67105d6.js"
+  ]
+}
