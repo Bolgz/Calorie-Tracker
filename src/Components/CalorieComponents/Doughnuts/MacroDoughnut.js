@@ -22,7 +22,7 @@ function MacroDoughnut(props) {
   /**
    * Filter entries by selected date & then add up amount of each macro consumed
    */
-  function filterAndFindTotalMacros() {
+  async function filterAndFindTotalMacros() {
     const filteredEntries = props.entries.filter(
       (entry) => entry._selectedDate === props.selectedDate
     );
@@ -33,7 +33,11 @@ function MacroDoughnut(props) {
     });
   }
 
-  filterAndFindTotalMacros();
+  filterAndFindTotalMacros().then(() => {
+    props.setCarbsIntake(totalCarbs);
+    props.setFatsIntake(totalFats);
+    props.setProteinsIntake(totalProteins);
+  });
 
   /**
    * Calculated macro allowances based upon daily calorie goal

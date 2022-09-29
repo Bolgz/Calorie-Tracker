@@ -25,6 +25,12 @@ function CalorieChart() {
   const [baseGoal, setBaseGoal] = useState(2000);
   //Calories consumed on selected day
   const [calories, setCalories] = useState(0);
+  //Carbs consumed on select day
+  const [carbs, setCarbs] = useState(0);
+  //Fats consumed on select day
+  const [fats, setFats] = useState(0);
+  //Proteins consumed on select day
+  const [proteins, setProteins] = useState(0);
 
   /**
    * How to calculate macro allowance:
@@ -181,7 +187,16 @@ function CalorieChart() {
     setSelectedDate(day + "/" + month + "/" + year);
   }
 
-  const now = 15;
+  let calorieDailyProgress = Math.round((calories / baseGoal) * 100);
+  let carbsDailyProgress = Math.round(
+    (carbs / ((baseGoal * baseCarbs) / 4)) * 100
+  );
+  let fatsDailyProgress = Math.round(
+    (fats / ((baseGoal * baseFats) / 9)) * 100
+  );
+  let proteinsDailyProgress = Math.round(
+    (proteins / ((baseGoal * baseProteins) / 4)) * 100
+  );
 
   return (
     <div>
@@ -210,8 +225,10 @@ function CalorieChart() {
             <CalorieDoughnut
               calories={calories}
               baseGoal={baseGoal}
-              entries={foodEntryObject}
+              foodEntries={foodEntryObject}
+              exerciseEntries={exerciseEntryObject}
               selectedDate={selectedDate}
+              setCalorieIntake={setCalories}
             />
             <MacroDoughnut
               baseCarbs={baseCarbs}
@@ -220,32 +237,35 @@ function CalorieChart() {
               baseGoal={baseGoal}
               entries={foodEntryObject}
               selectedDate={selectedDate}
+              setCarbsIntake={setCarbs}
+              setFatsIntake={setFats}
+              setProteinsIntake={setProteins}
             />
           </div>
           <h2 style={{ marginTop: "35px" }}>Daily Progress</h2>
           <div className="progress-bar-container">
             <ProgressBar
               variant="calories"
-              now={73}
-              label={`Calories - ${now}%`}
+              now={calorieDailyProgress}
+              label={`Calories - ${calorieDailyProgress}%`}
               className="progress-bar-progress"
             />
             <ProgressBar
               variant="carbs"
-              now={23}
-              label={`Carbs - ${now}%`}
+              now={carbsDailyProgress}
+              label={`Carbs - ${carbsDailyProgress}%`}
               className="progress-bar-progress"
             />
             <ProgressBar
               variant="fats"
-              now={89}
-              label={`Fats - ${now}%`}
+              now={fatsDailyProgress}
+              label={`Fats - ${fatsDailyProgress}%`}
               className="progress-bar-progress"
             />
             <ProgressBar
               variant="proteins"
-              now={46}
-              label={`Proteins - ${now}%`}
+              now={proteinsDailyProgress}
+              label={`Proteins - ${proteinsDailyProgress}%`}
               className="progress-bar-progress"
             />
           </div>

@@ -17,20 +17,24 @@ function CalorieDoughnut(props) {
   /**
    * Filter entries by selected date & then add up amount of calories consumed & calories burned
    */
-  function filterAndFindTotalCalories() {
-    const filteredEntries = props.entries.filter(
+  async function filterAndFindTotalCalories() {
+    const filteredFoodEntries = props.foodEntries.filter(
       (entry) => entry._selectedDate === props.selectedDate
     );
-    filteredEntries.forEach((entry) => {
-      if (entry._nameOfFood === undefined) {
-        totalExercise += parseInt(entry._caloriesAmount);
-      } else {
-        totalCalories += parseInt(entry._caloriesAmount);
-      }
+    const filteredExerciseEntries = props.exerciseEntries.filter(
+      (entry) => entry._selectedDate === props.selectedDate
+    );
+    filteredFoodEntries.forEach((entry) => {
+      totalCalories += parseInt(entry._caloriesAmount);
+    });
+    filteredExerciseEntries.forEach((entry) => {
+      totalExercise += parseInt(entry._caloriesAmount);
     });
   }
 
-  filterAndFindTotalCalories();
+  filterAndFindTotalCalories().then(() => {
+    props.setCalorieIntake(totalCalories);
+  });
 
   //Graph options
   const options = {
