@@ -1,6 +1,5 @@
 import "./CalorieEntryList.css";
 import CalorieEntryCard from "./Cards/CalorieEntryCard";
-import { CloseButton } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 
 /**

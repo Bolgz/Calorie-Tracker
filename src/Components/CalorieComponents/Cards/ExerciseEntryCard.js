@@ -20,7 +20,7 @@ function ExerciseEntryCard(props) {
       <td>
         {props.calories}{" "}
         <CloseButton
-          className="weight_entry_remove"
+          className="exercise_entry_remove"
           onClick={() => removeItem()}
         />
       </td>

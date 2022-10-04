@@ -1,11 +1,12 @@
 import "./Progress.css";
 import SideBar from "../../Navigation/SideBar";
+import WeightGraph from "../../WeightComponents/WeightGraph";
 
 function Progress() {
   return (
-    <div>
+    <div className="progress-flex-box">
       <SideBar />
-      <h1>Progress</h1>
+      <WeightGraph />
     </div>
   );
 }

@@ -7,17 +7,22 @@ import { CloseButton } from "react-bootstrap";
  */
 function WeightEntryCard(props) {
   return (
-    <div
-      className="weight_entry_card"
-      key={props.weightEntry[0] + props.weightEntry[1]}
-    >
-      <p className="weight_entry_weight">{props.weightEntry[1]} Kg</p>
-      <p className="weight_entry_date">{props.weightEntry[0]}</p>
-      <CloseButton
-        className="weight_entry_remove"
-        onClick={() => props.remove(props.weightEntry[0], props.weightEntry[1])}
-      />
-    </div>
+    <tr key={Math.random()}>
+      <td>{props.weightEntry[0]}</td>
+      <td>{props.weightEntry[1]}</td>
+      <td>{0}</td>
+      <td>
+        {0}{" "}
+        {
+          <CloseButton
+            onClick={() =>
+              props.remove(props.weightEntry[0], props.weightEntry[1])
+            }
+            className="weight_entry_remove"
+          />
+        }
+      </td>
+    </tr>
   );
 }
 

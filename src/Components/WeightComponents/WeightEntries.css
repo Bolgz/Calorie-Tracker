@@ -1,44 +1,6 @@
-.weight_entry_scroll_box {
-  border-style: solid;
-  border-radius: 10px;
-  border-width: 2px;
-  width: 400px;
-  padding: 10px;
-  margin: auto;
-  margin-top: 10px;
-  overflow-y: scroll;
-  height: 540px;
-}
-
-.weight-entries-title {
-  font-size: 22px;
-  margin-top: 20px;
-}
-
-.month_dropdown_list {
-  display: inline;
-  margin-right: 50px;
-}
-
 .weight_entries_section {
-  margin-left: 65px;
-}
-
-.year_dropdown_list {
-  display: inline;
-}
-
-::-webkit-scrollbar {
-  width: 16px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: #dddef7;
-  border-radius: 100px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(180deg, #eb5eab 0%, #708ad4 99%);
-  box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
-  border-radius: 100px;
+  max-width: 850px;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 45px;
 }

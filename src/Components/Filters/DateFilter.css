@@ -1,8 +1,8 @@
 .filter_container {
-  margin-left: 580px;
   margin-top: 30px;
-  margin-bottom: -40px;
-  width: 17%;
+  margin-bottom: -48px;
+  margin-left: 440px;
+  width: 330px;
   display: flex;
 }
 
@@ -16,5 +16,5 @@
 
 .reset_filters_button {
   margin: auto;
-  width: 120px;
+  width: 115px;
 }

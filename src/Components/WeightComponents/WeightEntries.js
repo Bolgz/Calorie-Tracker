@@ -1,5 +1,6 @@
 import "./WeightEntries.css";
 import WeightEntryCard from "./WeightEntryCard";
+import Table from "react-bootstrap/Table";
 
 /**
  * @param props Props passed down by WeightGraph.js
@@ -123,36 +124,50 @@ function WeightEntries(props) {
   if (monthFilter.length <= 1) {
     return (
       <div className="weight_entries_section">
-        <h4 className="weight-entries-title">
-          Weight Entries - {props.yearFilter}
-        </h4>
-        <div className="weight_entry_scroll_box">
-          {filteredEntriesYear.map((weightEntry) => (
-            <WeightEntryCard
-              weightEntry={weightEntry}
-              remove={props.remove}
-              key={Math.random()}
-            />
-          ))}
-        </div>
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>Entry Date</th>
+              <th>Weight</th>
+              <th>Target Weight</th>
+              <th>Difference</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredEntriesYear.map((weightEntry) => (
+              <WeightEntryCard
+                weightEntry={weightEntry}
+                remove={props.remove}
+                key={Math.random()}
+              />
+            ))}
+          </tbody>
+        </Table>
       </div>
     );
   } else {
     //If there is a month filter, show all entries filtered by year and month
     return (
       <div className="weight_entries_section">
-        <h4 className="weight-entries-title">
-          Weight Entries - {props.monthFilter} {props.yearFilter}
-        </h4>
-        <div className="weight_entry_scroll_box">
-          {filteredEntriesMonth.map((weightEntry) => (
-            <WeightEntryCard
-              weightEntry={weightEntry}
-              remove={props.remove}
-              key={Math.random()}
-            />
-          ))}
-        </div>
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>Weight</th>
+              <th>Weight Date</th>
+              <th>Target Weight</th>
+              <th>Difference</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredEntriesMonth.map((weightEntry) => (
+              <WeightEntryCard
+                weightEntry={weightEntry}
+                remove={props.remove}
+                key={Math.random()}
+              />
+            ))}
+          </tbody>
+        </Table>
       </div>
     );
   }

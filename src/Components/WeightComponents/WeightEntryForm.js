@@ -46,10 +46,12 @@ function WeightEntryForm(props) {
   }
 
   return (
-    <div>
+    <div className="weight-entry-form-and-title">
+      <h4 className="weight-form-title">
+        Weight Entries - {props.monthFilter} {props.yearFilter}
+      </h4>
       <Form className="weight-entry-form" onSubmit={addWeightEntry}>
         <Form.Group className="mb-3">
-          <h4 className="weight-form-title">Add Weight Entry</h4>
           <Form.Control
             required
             type="date"

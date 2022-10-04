@@ -349,14 +349,18 @@ function WeightGraph() {
   };
 
   return (
-    <div>
+    <div className="weight_graph_page">
       <DateFilter
         changeMonthFilter={handleChangeMonthFilter}
         changeYearFilter={handleChangeYearFilter}
       />
       <Line options={options} data={graphData} className="graph" />
-      <div className="weight-entry-section">
-        <WeightEntryForm addWeightEntry={handleWeightEntry} />
+      <div className="weight_form_and_entries_container">
+        <WeightEntryForm
+          addWeightEntry={handleWeightEntry}
+          monthFilter={monthFilter}
+          yearFilter={yearFilter}
+        />
         <WeightEntries
           entries={allEntries}
           remove={removeWeightEntry}
