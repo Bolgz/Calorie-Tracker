@@ -42,11 +42,11 @@ function CalorieChart() {
    */
 
   //Percentage of total calories that should be carbs
-  const [baseCarbs, setBaseCarbs] = useState(0.4);
+  const baseCarbs = 0.4;
   //Percentage of total calories that should be fats
-  const [baseFats, setBaseFats] = useState(0.3);
+  const baseFats = 0.3;
   //Percentage of total calories that should be proteins
-  const [baseProteins, setBaseProteins] = useState(0.3);
+  const baseProteins = 0.3;
 
   //Calorie entry object (list of objects)
   const [foodEntryObject, setFoodEntryObject] = useState([]);

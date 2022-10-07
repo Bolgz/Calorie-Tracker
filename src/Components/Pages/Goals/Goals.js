@@ -1,142 +1,200 @@
 import "./Goals.css";
 import SideBar from "../../Navigation/SideBar";
+import React, { useState } from "react";
+import GoalsForm from "./GoalsForm";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import React, { useState } from "react";
 
 function Goals() {
-  const [startingWeight, setStartingWeight] = useState();
-  const [goalWeight, setGoalWeight] = useState();
-  const [canShowRecommendations, setCanShowRecommendations] = useState(true);
+  const [canShowRecommendations, setCanShowRecommendations] = useState(false);
+  const [dietRecommendations, setDietRecommendations] = useState([]);
 
-  function calculateRecommendations() {}
+  function activateDiet() {}
 
-  function setGoals(event) {
-    event.preventDefault();
-
-    setCanShowRecommendations(true);
-
-    //Send starting and goal weight to firebase
-
-    calculateRecommendations();
-  }
-
-  return (
-    <div className="goals-flex-box">
-      <SideBar />
-
-      <div className="goal-entry-container">
-        <h1>Set Goals</h1>
-        <Form onSubmit={setGoals}>
-          <Form.Group className="goal-form-field">
-            <Form.Label>Starting Weight (Kg)</Form.Label>
-            <Form.Control
-              required
-              type="number"
-              placeholder="Enter your starting weight"
-              onChange={(e) => setStartingWeight(e.target.value)}
-              id="startingWeight"
-            />
-          </Form.Group>
-
-          <Form.Group className="goal-form-field">
-            <Form.Label>Height (ft)(in)</Form.Label>
-            <Form.Control
-              required
-              type="number"
-              placeholder="Height (ft)"
-              id="heightFeet"
-            />
-          </Form.Group>
-
-          <Form.Group className="goal-form-field">
-            <Form.Control
-              required
-              type="number"
-              placeholder="Height (in)"
-              id="heightFeet"
-            />
-          </Form.Group>
-
-          <Form.Group className="goal-form-field">
-            <Form.Label>Goal Weight</Form.Label>
-            <Form.Control
-              required
-              type="number"
-              placeholder="Enter you goal weight"
-              onChange={(e) => setGoalWeight(e.target.value)}
-              id="goalWeight"
-            />
-          </Form.Group>
-
-          <Form.Group className="goal-form-field">
-            <Form.Label>How active are you?</Form.Label>
-            <div key={`inline-radio`} className="mb-3">
-              <Form.Check
-                inline
-                label="Not Very Active"
-                name="group1"
-                type={"radio"}
-                id={`inline-radio-1`}
-              />
-              <Form.Check
-                inline
-                label="Active"
-                name="group1"
-                type={"radio"}
-                id={`inline-radio-2`}
-              />
-              <Form.Check
-                inline
-                label="Very Active"
-                name="group1"
-                type={"radio"}
-                id={`inline-radio-2`}
-              />
-            </div>
-          </Form.Group>
-
-          <Button
-            variant="primary"
-            type="submit"
-            className="goal-form-submit-button"
-          >
-            Set weight loss goals
-          </Button>
-        </Form>
+  //These are the diet recommendation cards generated when the 'get recommendations' form is submitted
+  const dietRecommendationsCards = dietRecommendations.map((diet) => {
+    return (
+      <div className="recommendation-card" key={Math.random()}>
+        <h3 className="recommendation-title">{diet.name}</h3>
+        <p className="recommendations-sub">Calories(Kcal):</p>
+        <p className="recommendations-value">{diet.calorie}</p>
+        <br />
+        <br />
+        <p className="recommendations-sub">Carbs(grams):</p>
+        <p className="recommendations-value">{diet.carbIntake}</p>
+        <br />
+        <br />
+        <p className="recommendations-sub">Fats(grams):</p>
+        <p className="recommendations-value">{diet.fatsIntake}</p>
+        <br />
+        <br />
+        <p className="recommendations-sub">Proteins(grams):</p>
+        <p className="recommendations-value">{diet.proteinsIntake}</p>
+        <Button
+          variant="primary"
+          type="submit"
+          className="recommendation-activate-button"
+        >
+          Activate Diet
+        </Button>
       </div>
-      <div className="recommendations-container">
-        {canShowRecommendations ? (
-          <div>
-            <h1 className="recommendations-header">Weight Profile</h1>
-            <p className="recommendations-sub">Starting Weight (Kg):</p>
-            <p className="recommendations-value">{startingWeight}Kg</p>
-            <br />
-            <br />
-            <p className="recommendations-sub">Goal Weight (Kg):</p>
-            <p className="recommendations-value">{goalWeight}Kg</p>
-            <br />
-            <br />
-            <h1 className="recommendations-header">Recommendations</h1>
-            <p>Daily Calorie Intake: </p>
-            <p>Daily Carbohydrates Intake: </p>
-            <p>Daily Fats Intake: </p>
-            <p>Daily Proteins Intake: </p>
-          </div>
-        ) : (
-          <div>
-            <h1 className="recommendations-header" style={{ color: "brown" }}>
-              No Data
-            </h1>
-            <p>
-              Please set your goals on the left side of the page. Until then, we
-              cannot give you any macro or calorie defecit recommendations
-            </p>
-          </div>
-        )}
-      </div>
+    );
+  });
+
+  //This is the custom diet component (small version)
+  const customDiet = (
+    <div className="recommendation-card">
+      <Form onSubmit={activateDiet}>
+        <h3 className="recommendation-title">Custom Diet</h3>
+        <p className="recommendations-sub">Calories(Kcal):</p>
+        <Form.Control
+          required
+          type="number"
+          placeholder="0"
+          className="custom-diet-input"
+          onChange={(e) => 1 + 1}
+          id="startingWeight"
+        />
+        <br />
+        <br />
+        <p className="recommendations-sub">Carbs(grams):</p>
+        <Form.Control
+          required
+          type="number"
+          placeholder="0"
+          className="custom-diet-input"
+          onChange={(e) => 1 + 1}
+          id="startingWeight"
+        />
+        <br />
+        <br />
+        <p className="recommendations-sub">Fats(grams):</p>
+        <Form.Control
+          required
+          type="number"
+          placeholder="0"
+          className="custom-diet-input"
+          onChange={(e) => 1 + 1}
+          id="startingWeight"
+        />
+        <br />
+        <br />
+        <p className="recommendations-sub">Proteins(grams):</p>
+        <Form.Control
+          required
+          type="number"
+          placeholder="0"
+          className="custom-diet-input"
+          onChange={(e) => 1 + 1}
+          id="startingWeight"
+        />
+        <Button
+          variant="primary"
+          type="submit"
+          className="custom-diet-activate-button"
+        >
+          Activate Diet
+        </Button>
+      </Form>
     </div>
   );
+
+  //If form has been submitted, show recommendations
+  if (canShowRecommendations) {
+    return (
+      <div className="goals-flex-box">
+        <SideBar />
+
+        <GoalsForm
+          setCanShowRecommendations={setCanShowRecommendations}
+          setDietRecommendations={setDietRecommendations}
+        />
+
+        <div className="recommendations-container">
+          {dietRecommendationsCards}
+          {/* This card below is to activate a custom diet plan */}
+          {customDiet}
+        </div>
+      </div>
+    );
+    //If form has not been submitted, show 'large' custom diet form
+  } else {
+    return (
+      <div className="goals-flex-box">
+        <SideBar />
+
+        <GoalsForm
+          setCanShowRecommendations={setCanShowRecommendations}
+          setDietRecommendations={setDietRecommendations}
+        />
+        <div className="no-recommendations-container">
+          <h1 className="no-data-header">Create Custom Diet</h1>
+          <div className="recommendation-card-large">
+            <Form onSubmit={activateDiet}>
+              <Form.Label className="recommendations-sub-large">
+                Calories(Kcal):
+              </Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="0"
+                className="custom-diet-input-large"
+                onChange={(e) => 1 + 1}
+                id="startingWeight"
+              />
+              <Form.Label className="recommendations-sub-large">
+                Carbs(grams):
+              </Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="0"
+                className="custom-diet-input-large"
+                onChange={(e) => 1 + 1}
+                id="startingWeight"
+              />
+              <Form.Label className="recommendations-sub-large">
+                Fats(grams):
+              </Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="0"
+                className="custom-diet-input-large"
+                onChange={(e) => 1 + 1}
+                id="startingWeight"
+              />
+              <Form.Label className="recommendations-sub-large">
+                Proteins(grams):
+              </Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="0"
+                className="custom-diet-input-large"
+                onChange={(e) => 1 + 1}
+                id="startingWeight"
+              />
+              <Button
+                variant="primary"
+                type="submit"
+                className="custom-diet-activate-button-large"
+              >
+                Activate Diet
+              </Button>
+            </Form>
+            <br />
+            <br />
+            <p className="recommendations-sub" style={{ color: "brown" }}>
+              {" "}
+              Please remember to consult a medical expert if you want to gain or
+              lose a lot of weight.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Goals;

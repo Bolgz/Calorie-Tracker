@@ -3,46 +3,100 @@
   background-color: rgb(255, 255, 255);
 }
 
-.goal-entry-container {
-  margin: auto;
-  margin-top: 100px;
-}
-
-.goal-form-field {
-  margin-top: 25px;
-  width: 350px;
-}
-
 .goal-form-field-inline {
   display: inline;
   width: 100px;
 }
 
-.goal-form-submit-button {
-  margin-top: 30px;
+.recommendations-header {
+  margin-bottom: 45px;
 }
 
 .recommendations-container {
-  width: 300px;
-  margin-top: 100px;
-  margin-right: 400px;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  width: 800px;
+  height: 750px;
+  margin-top: 80px;
+  margin-right: 100px;
   margin-left: -200px;
 }
 
-.recommendations-header {
-  margin-bottom: 20px;
+.no-recommendations-container {
+  width: 800px;
+  height: 750px;
+  margin-top: 80px;
+  margin-right: 100px;
+  margin-left: -200px;
 }
 
 .recommendations-sub {
-  font-weight: 400;
   font-size: 19px;
   display: inline;
 }
 
 .recommendations-value {
-  font-weight: 500;
   font-size: 19px;
   display: inline;
-  margin-left: 40px;
   float: right;
+  margin-right: 85px;
+}
+
+.recommendation-card {
+  flex-wrap: wrap;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+  border-radius: 25px;
+  margin-left: 30px;
+  width: 320px;
+  height: 340px;
+  padding: 2%;
+}
+
+.recommendation-card-large {
+  margin-left: 70px;
+  margin-top: -23px;
+  width: 600px;
+  height: 340px;
+  padding: 2%;
+}
+
+.recommendation-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.recommendation-activate-button {
+  margin-left: 75px;
+  margin-top: 8px;
+}
+
+.no-data-header {
+  margin-top: 20px;
+  margin-left: 200px;
+}
+
+.custom-diet-input {
+  display: inline;
+  margin-right: 20px;
+  margin-top: 0px;
+  width: 90px;
+  height: 30px;
+  float: right;
+}
+
+.recommendations-sub-large {
+  margin-top: 26px;
+}
+
+.custom-diet-activate-button {
+  margin-left: 75px;
+  margin-top: 25px;
+}
+
+.custom-diet-activate-button-large {
+  width: 175px;
+  margin-left: 200px;
+  margin-top: 50px;
 }
