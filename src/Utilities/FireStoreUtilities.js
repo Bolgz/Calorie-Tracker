@@ -18,6 +18,8 @@ export async function addUser(_userId) {
     weightEntries: [],
     calorieEntries: [],
     exerciseEntries: [],
+    goalWeight: "",
+    activeDiet: {},
   });
 }
 
@@ -92,6 +94,30 @@ export async function addCalorieEntry(_calorieEntryObject, _userId) {
   ];
 
   await updateDoc(userRef, { calorieEntries: newCalorieEntryList });
+}
+
+/**
+ * Add active diet to firestore
+ * @param _userId The ID of the user to add the active diet for
+ * @param _activeDietObject The calorie entry object to add
+ */
+export async function addActiveDiet(_activeDietObject, _userId) {
+  const userRef = doc(getFirestore(), "users", _userId);
+  const docSnap = await getDoc(userRef);
+
+  await updateDoc(userRef, { activeDiet: _activeDietObject });
+}
+
+/**
+ * Add goal weight to firestore
+ * @param _userId The ID of the user to add the active diet for
+ * @param _goalWeight The calorie entry object to add
+ */
+export async function addGoalWeight(_goalWeight, _userId) {
+  const userRef = doc(getFirestore(), "users", _userId);
+  const docSnap = await getDoc(userRef);
+
+  await updateDoc(userRef, { goalWeight: _goalWeight });
 }
 
 /**

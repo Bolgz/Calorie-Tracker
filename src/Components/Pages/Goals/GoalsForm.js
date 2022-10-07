@@ -3,6 +3,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import React, { useState } from "react";
 import * as ReactDOM from "react-dom";
+import * as utilities from "../../../Utilities/FireStoreUtilities";
+import { getAuth } from "firebase/auth";
 
 function GoalsForm(props) {
   const [startingWeight, setStartingWeight] = useState();
@@ -18,6 +20,7 @@ function GoalsForm(props) {
         655.1 + 9.563 * startingWeight + 1.85 * height - 4.676 * age;
       const femaleLightLoss = femaleMaintain - 200;
       const femaleHeavyLoss = femaleMaintain - 450;
+      const femaleGain = femaleMaintain + 200;
 
       //Create weight loss 'objects' that calculate macro intake
       const maintainObject = {
@@ -43,16 +46,27 @@ function GoalsForm(props) {
         fatsIntake: Math.round((femaleHeavyLoss * 0.3) / 9),
         proteinsIntake: Math.round((femaleHeavyLoss * 0.3) / 4),
       };
+
+      const gainObject = {
+        name: "Gain Weight",
+        calorie: Math.round(femaleGain),
+        carbIntake: Math.round((femaleGain * 0.4) / 4),
+        fatsIntake: Math.round((femaleGain * 0.3) / 9),
+        proteinsIntake: Math.round((femaleGain * 0.3) / 4),
+      };
+
       props.setDietRecommendations([
         maintainObject,
         lightLossObject,
         heavyLossObject,
+        gainObject,
       ]);
     } else {
       const maleMaintain =
         66.5 + 12.75 * startingWeight + 5.003 * height - 6.75 * age;
       const maleLightLoss = maleMaintain - 275;
       const maleHeavyLoss = maleMaintain - 500;
+      const maleGain = maleMaintain + 300;
 
       //Create weight loss 'objects' that calculate macro intake
       const maintainObject = {
@@ -78,10 +92,20 @@ function GoalsForm(props) {
         fatsIntake: Math.round((maleHeavyLoss * 0.3) / 9),
         proteinsIntake: Math.round((maleHeavyLoss * 0.3) / 4),
       };
+
+      const gainObject = {
+        name: "Gain Weight",
+        calorie: Math.round(maleGain),
+        carbIntake: Math.round((maleGain * 0.4) / 4),
+        fatsIntake: Math.round((maleGain * 0.3) / 9),
+        proteinsIntake: Math.round((maleGain * 0.3) / 4),
+      };
+
       props.setDietRecommendations([
         maintainObject,
         lightLossObject,
         heavyLossObject,
+        gainObject,
       ]);
     }
   }
@@ -91,7 +115,9 @@ function GoalsForm(props) {
 
     props.setCanShowRecommendations(true);
 
-    //Send starting and goal weight to firebase
+    //Send goal weight to firebase
+    const auth = getAuth();
+    utilities.addGoalWeight(goalWeight, auth.currentUser.uid);
 
     calculateRecommendations();
   }
