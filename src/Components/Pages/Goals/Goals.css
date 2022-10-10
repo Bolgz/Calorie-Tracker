@@ -67,6 +67,7 @@
 .no-data-header {
   margin-top: 20px;
   margin-left: 200px;
+  color: brown;
 }
 
 .custom-diet-input {
@@ -81,4 +82,27 @@
 .custom-diet-activate-button {
   margin-left: 75px;
   margin-top: 25px;
+}
+
+.no-data-warning-container {
+  width: 500px;
+  margin-left: 160px;
+  margin-top: 55px;
+}
+
+.no-data-warning-text {
+  font-size: 22px;
+  color: brown;
+}
+
+.application-access-text {
+  font-size: 22px;
+  color: green;
+}
+
+.application-access-text-conatiner {
+  margin-top: 120px;
+  margin-bottom: 130px;
+  width: 500px;
+  margin-left: 160px;
 }

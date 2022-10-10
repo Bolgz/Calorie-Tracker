@@ -20,6 +20,7 @@ export async function addUser(_userId) {
     exerciseEntries: [],
     goalWeight: "",
     activeDiet: {},
+    hasActiveDiet: false,
   });
 }
 
@@ -103,9 +104,9 @@ export async function addCalorieEntry(_calorieEntryObject, _userId) {
  */
 export async function addActiveDiet(_activeDietObject, _userId) {
   const userRef = doc(getFirestore(), "users", _userId);
-  const docSnap = await getDoc(userRef);
 
   await updateDoc(userRef, { activeDiet: _activeDietObject });
+  await updateDoc(userRef, { hasActiveDiet: true });
 }
 
 /**
@@ -115,7 +116,6 @@ export async function addActiveDiet(_activeDietObject, _userId) {
  */
 export async function addGoalWeight(_goalWeight, _userId) {
   const userRef = doc(getFirestore(), "users", _userId);
-  const docSnap = await getDoc(userRef);
 
   await updateDoc(userRef, { goalWeight: _goalWeight });
 }
@@ -171,6 +171,42 @@ export async function getExerciseEntryList(_userId) {
   const docSnap = await getDoc(userRef);
 
   return docSnap.data().exerciseEntries;
+}
+
+/**
+ * Retrieves the active diet
+ * @param _userId The ID of the user to retrieve active diet for
+ * @return The active diet
+ */
+export async function getActiveDiet(_userId) {
+  const userRef = doc(getFirestore(), "users", _userId);
+  const docSnap = await getDoc(userRef);
+
+  return docSnap.data().activeDiet;
+}
+
+/**
+ * Retrieves the boolean for if the user has an active diet
+ * @param _userId The ID of the user to check the active diet for
+ * @return Has the user got an active diet
+ */
+export async function hasActiveDiet(_userId) {
+  const userRef = doc(getFirestore(), "users", _userId);
+  const docSnap = await getDoc(userRef);
+
+  return docSnap.data().hasActiveDiet;
+}
+
+/**
+ * Retrieves the goal weight
+ * @param _userId The ID of the user to retrieve the goal weight for
+ * @return The goal weight
+ */
+export async function getGoalWeight(_userId) {
+  const userRef = doc(getFirestore(), "users", _userId);
+  const docSnap = await getDoc(userRef);
+
+  return docSnap.data().goalWeight;
 }
 
 /**

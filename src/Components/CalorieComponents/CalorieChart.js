@@ -79,7 +79,6 @@ function CalorieChart() {
 
     //Add entry in firestore
     const auth = getAuth();
-    //
     utilities.addExerciseEntry(entry, auth.currentUser.uid);
   }
 
@@ -106,6 +105,9 @@ function CalorieChart() {
       .getExerciseEntryList(auth.currentUser.uid)
       .then((entries) => populateExerciseEntryObject(entries));
 
+    utilities
+      .getActiveDiet(auth.currentUser.uid)
+      .then((diet) => setBaseGoal(diet.calorie));
     // eslint-disable-next-line
   }, []);
 

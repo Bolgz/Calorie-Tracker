@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 import * as utilities from "./Utilities/FireStoreUtilities.js";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Components/Pages/Home/Home";
@@ -36,6 +37,9 @@ function App() {
   //Is the user currently logged in
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  //Has the user previously activated a diet
+  const [hasChosenDiet, setHasChosenDiet] = useState(false);
+
   //Using useEffect to check if the user is logged in
   useEffect(() => {
     //Checks if current user is logged in
@@ -55,6 +59,23 @@ function App() {
 
         //User is logged in
         setIsLoggedIn(true);
+
+        const auth = getAuth();
+
+        //Set up a document listener to see if user activates a diet
+        // eslint-disable-next-line
+        const unsub = onSnapshot(
+          doc(getFirestore(), "users", auth.currentUser.uid),
+          (doc) => {
+            setHasChosenDiet(doc.data().hasActiveDiet);
+          }
+        );
+
+        utilities.hasActiveDiet(user.uid).then((diet) => {
+          if (diet) {
+            setHasChosenDiet(true);
+          }
+        });
       } else {
         //User is not logged in
         setIsLoggedIn(false);
@@ -62,8 +83,8 @@ function App() {
     });
   }, []);
 
-  //If user is logged in render Home page and Navigation bar
-  if (isLoggedIn) {
+  //If user is logged & has a chosen diet render Home page and Navigation bar
+  if (isLoggedIn && hasChosenDiet) {
     return (
       <Routes>
         <Route
@@ -79,6 +100,20 @@ function App() {
         <Route path="/account" element={<Account />} />
         <Route path="/goals" element={<Goals />} />
         <Route path="/progress" element={<Progress />} />
+      </Routes>
+    );
+  }
+  //If user is logged & has not chosen diet limit application access to goals page
+  if (isLoggedIn && !hasChosenDiet) {
+    return (
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        {/**Redirect user to goals page if trying to access resitricted content */}
+        <Route path="/" element={<Goals />} />
+        <Route path="/account" element={<Goals />} />
+        <Route path="/goals" element={<Goals />} />
+        <Route path="/progress" element={<Goals />} />
       </Routes>
     );
     //User is not logged in, only allow access to login and signup pages

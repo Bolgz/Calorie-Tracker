@@ -72,7 +72,7 @@ function Login() {
           />
         </Form.Group>
 
-        <Link to="/" className="login-button">
+        <Link to="/Calorie-Tracker" className="login-button">
           <Button variant="primary" onClick={setAuthPersistence}>
             Log in
           </Button>

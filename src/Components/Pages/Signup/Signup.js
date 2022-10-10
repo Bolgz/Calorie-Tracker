@@ -25,7 +25,7 @@ function Signup() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         //Switches to home screen upon account creation
-        window.location.pathname = "/";
+        window.location.pathname = "/Calorie-Tracker";
       })
       .catch((error) => {
         const errorMessage = error.message;
