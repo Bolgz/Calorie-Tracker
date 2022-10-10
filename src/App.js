@@ -17,7 +17,7 @@ import Progress from "./Components/Pages/Progress/Progress";
  * Firebase configuration (needs to go in .env file)
  */
 const firebaseConfig = {
-  apiKey: "AIzaSyCOjebQFkKFmO6H0YPVgOrLEvbg84ructA",
+  apiKey: process.env.REACT_APP_firebaseAPIKey,
   authDomain: "calorie-tracker-f7573.firebaseapp.com",
   projectId: "calorie-tracker-f7573",
   storageBucket: "calorie-tracker-f7573.appspot.com",
