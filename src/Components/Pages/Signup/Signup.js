@@ -61,9 +61,9 @@ function Signup() {
   return (
     <div className="main-content">
       <Form className="signup-form">
-        <h2 className="form-title">Create a Calorie-Tracker account</h2>
+        <h2 className="form-title">Create a Calorie Tracker Account</h2>
 
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="signup-email-field" controlId="formBasicEmail">
           <Form.Label className="form-subtitle">Email address</Form.Label>
           <Form.Control
             type="email"
@@ -75,7 +75,10 @@ function Signup() {
           </Form.Text>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group
+          className="signup-password-field"
+          controlId="formBasicPassword"
+        >
           <Form.Label className="form-subtitle">Password</Form.Label>
           <Form.Control
             type="password"

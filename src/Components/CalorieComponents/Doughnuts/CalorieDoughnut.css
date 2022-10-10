@@ -12,9 +12,13 @@
 }
 
 .calories-remaining-text-container {
-  margin-left: 80px;
-  margin-top: -140px;
-  margin-bottom: 60px;
+  margin-left: 53px;
+  margin-top: -145px;
+  margin-bottom: 25px;
+  width: 145px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
 .calories-remaining-text-calories {
@@ -23,9 +27,9 @@
 }
 
 .calories-remaining-text-remaining {
-  margin-top: -23px;
   margin-left: 3px;
   font-size: 17px;
+  margin-top: -20px;
 }
 
 .counter-section {
@@ -35,7 +39,7 @@
   flex-direction: column;
   margin: auto;
   margin-left: 270px;
-  margin-top: -190px;
+  margin-top: -170px;
   justify-content: space-evenly;
 }
 

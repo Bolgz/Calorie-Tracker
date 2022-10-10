@@ -54,7 +54,7 @@ function Login() {
       <Form className="login-form">
         <h2 className="form-title-login">Log in to Calorie-Tracker!</h2>
 
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="login-email-field" controlId="formBasicEmail">
           <Form.Label className="form-subtitle-login">Email address</Form.Label>
           <Form.Control
             type="email"
@@ -63,7 +63,10 @@ function Login() {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group
+          className="login-password-field"
+          controlId="formBasicPassword"
+        >
           <Form.Label className="form-subtitle-login">Password</Form.Label>
           <Form.Control
             type="password"
@@ -72,7 +75,7 @@ function Login() {
           />
         </Form.Group>
 
-        <Link to="/Calorie-Tracker" className="login-button">
+        <Link to="/" className="login-button">
           <Button variant="primary" onClick={setAuthPersistence}>
             Log in
           </Button>

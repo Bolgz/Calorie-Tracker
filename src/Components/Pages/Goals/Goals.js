@@ -1,5 +1,6 @@
 import "./Goals.css";
 import SideBar from "../../Navigation/SideBar";
+import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import GoalsForm from "./GoalsForm";
 import Button from "react-bootstrap/Button";
@@ -51,13 +52,15 @@ function Goals() {
         <br />
         <p className="recommendations-sub">Proteins(grams):</p>
         <p className="recommendations-value">{diet.proteinsIntake}</p>
-        <Button
-          variant="primary"
-          onClick={() => activateDiet(diet.name)}
-          className="recommendation-activate-button"
-        >
-          Activate Diet
-        </Button>
+        <Link to="/">
+          <Button
+            variant="primary"
+            onClick={() => activateDiet(diet.name)}
+            className="recommendation-activate-button"
+          >
+            Activate Diet
+          </Button>
+        </Link>
       </div>
     );
   });

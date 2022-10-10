@@ -23,10 +23,10 @@ function WeightEntryCard(props) {
   return (
     <tr key={Math.random()}>
       <td>{props.weightEntry[0]}</td>
-      <td>{props.weightEntry[1]}</td>
-      <td>{targetWeight}</td>
+      <td>{props.weightEntry[1]} Kg</td>
+      <td>{targetWeight} Kg</td>
       <td>
-        {targetWeight - props.weightEntry[1]}
+        {props.weightEntry[1] - targetWeight} Kg
         {
           <CloseButton
             onClick={() =>

@@ -17,9 +17,9 @@ function GoalsForm(props) {
     //Calculate calorie intake for maintenace, light and heavy weight loss (using BMR)
     if (gender === "Female") {
       const femaleMaintain =
-        655.1 + 9.563 * startingWeight + 1.85 * height - 4.676 * age;
-      const femaleLightLoss = femaleMaintain - 200;
-      const femaleHeavyLoss = femaleMaintain - 450;
+        655.1 + 9.563 * startingWeight + 1.85 * height - 4.676 * age + 400;
+      const femaleLightLoss = femaleMaintain - 150;
+      const femaleHeavyLoss = femaleMaintain - 300;
       const femaleGain = femaleMaintain + 200;
 
       //Create weight loss 'objects' that calculate macro intake
@@ -63,10 +63,10 @@ function GoalsForm(props) {
       ]);
     } else {
       const maleMaintain =
-        66.5 + 12.75 * startingWeight + 5.003 * height - 6.75 * age;
-      const maleLightLoss = maleMaintain - 275;
-      const maleHeavyLoss = maleMaintain - 500;
-      const maleGain = maleMaintain + 300;
+        66.5 + 12.75 * startingWeight + 5.003 * height - 6.75 * age + 500;
+      const maleLightLoss = maleMaintain - 200;
+      const maleHeavyLoss = maleMaintain - 350;
+      const maleGain = maleMaintain + 350;
 
       //Create weight loss 'objects' that calculate macro intake
       const maintainObject = {
@@ -130,6 +130,8 @@ function GoalsForm(props) {
           <Form.Label>Starting Weight (Kg)</Form.Label>
           <Form.Control
             required
+            min={45}
+            max={140}
             type="number"
             placeholder="Enter your starting weight"
             onChange={(e) => setStartingWeight(e.target.value)}
@@ -141,6 +143,8 @@ function GoalsForm(props) {
           <Form.Label>Height (cm)</Form.Label>
           <Form.Control
             required
+            min={122}
+            max={275}
             type="number"
             placeholder="Enter your height (cm)"
             onChange={(e) => setHeight(e.target.value)}
@@ -152,6 +156,8 @@ function GoalsForm(props) {
           <Form.Label>Age</Form.Label>
           <Form.Control
             required
+            min={18}
+            max={75}
             type="number"
             placeholder="Enter your age"
             onChange={(e) => setAge(e.target.value)}
@@ -160,9 +166,11 @@ function GoalsForm(props) {
         </Form.Group>
 
         <Form.Group className="goal-form-field">
-          <Form.Label>Goal Weight</Form.Label>
+          <Form.Label>Goal Weight (Kg)</Form.Label>
           <Form.Control
             required
+            min={50}
+            max={115}
             type="number"
             placeholder="Enter you goal weight"
             onChange={(e) => setGoalWeight(e.target.value)}

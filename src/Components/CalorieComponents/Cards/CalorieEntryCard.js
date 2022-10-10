@@ -1,6 +1,5 @@
 import "./CalorieEntryCard.css";
 import { CloseButton } from "react-bootstrap";
-import Table from "react-bootstrap/Table";
 
 /**
  * @param props Passed down from CalorieEntryList.js
@@ -25,11 +24,11 @@ function CalorieEntryCard(props) {
   return (
     <tr key={Math.random()}>
       <td>{props.name}</td>
-      <td>{props.calories}</td>
-      <td>{props.carbs}</td>
-      <td>{props.fat}</td>
+      <td>{props.calories}-Kcal</td>
+      <td>{props.carbs}g</td>
+      <td>{props.fat}g</td>
       <td>
-        {props.protein}{" "}
+        {props.protein}g{" "}
         <CloseButton
           className="calorie_entry_remove"
           onClick={() => removeItem()}
