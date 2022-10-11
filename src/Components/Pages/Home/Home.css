@@ -2,3 +2,8 @@
   display: flex;
   background-color: rgb(255, 255, 255);
 }
+
+.dashboard-title {
+  display: inline;
+  margin-bottom: 30px;
+}

@@ -109,9 +109,9 @@ function App() {
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/account" element={<Account />} />
         {/**Redirect user to goals page if trying to access resitricted content */}
         <Route path="/" element={<Goals />} />
-        <Route path="/account" element={<Goals />} />
         <Route path="/goals" element={<Goals />} />
         <Route path="/progress" element={<Goals />} />
       </Routes>

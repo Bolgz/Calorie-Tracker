@@ -9,7 +9,9 @@ function Home() {
   return (
     <div className="home-flex-box">
       <SideBar />
-      <CalorieChart />
+      <div>
+        <CalorieChart />
+      </div>
     </div>
   );
 }

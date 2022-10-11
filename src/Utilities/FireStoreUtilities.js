@@ -1,3 +1,4 @@
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import {
   doc,
   getFirestore,
@@ -6,6 +7,7 @@ import {
   getDocs,
   collection,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 /**
@@ -275,4 +277,20 @@ export async function removeExerciseEntry(_entryToRemove, _userId) {
     );
 
   await updateDoc(userRef, { exerciseEntries: newExerciseEntryList });
+}
+
+/**
+ * Delete user data from database
+ * @param _userId The ID of the user to delete from database
+ */
+export async function deleteUser(_userId, email, password) {
+  const user = getAuth().currentUser;
+  const auth = getAuth();
+
+  signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+    //Reauthenticated, delete user account
+    deleteDoc(doc(getFirestore(), "users", _userId)).then(() => {
+      user.delete().then();
+    });
+  });
 }

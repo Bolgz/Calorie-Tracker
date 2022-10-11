@@ -50,45 +50,49 @@ function Login() {
   }
 
   return (
-    <div className="main-content-login">
-      <Form className="login-form">
-        <h2 className="form-title-login">Log in to Calorie-Tracker!</h2>
+    <div className="login-page-container">
+      <div className="main-content-login">
+        <Form className="login-form">
+          <h2 className="form-title-login">Log in to Calorie-Tracker!</h2>
 
-        <Form.Group className="login-email-field" controlId="formBasicEmail">
-          <Form.Label className="form-subtitle-login">Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
+          <Form.Group className="login-email-field" controlId="formBasicEmail">
+            <Form.Label className="form-subtitle-login">
+              Email address
+            </Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group
-          className="login-password-field"
-          controlId="formBasicPassword"
-        >
-          <Form.Label className="form-subtitle-login">Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
+          <Form.Group
+            className="login-password-field"
+            controlId="formBasicPassword"
+          >
+            <Form.Label className="form-subtitle-login">Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
 
-        <Link to="/" className="login-button">
-          <Button variant="primary" onClick={setAuthPersistence}>
-            Log in
-          </Button>
-        </Link>
+          <Link to="/" className="login-button">
+            <Button variant="primary" onClick={setAuthPersistence}>
+              Log in
+            </Button>
+          </Link>
 
-        {loginError && (
-          <p className="error-message-login">Incorrect email or password</p>
-        )}
+          {loginError && (
+            <p className="error-message-login">Incorrect email or password</p>
+          )}
 
-        <Link to="/signup" className="signup-link">
-          Click here to Signup
-        </Link>
-      </Form>
+          <Link to="/signup" className="signup-link">
+            Click here to Signup
+          </Link>
+        </Form>
+      </div>
     </div>
   );
 }
