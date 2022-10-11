@@ -25,7 +25,8 @@ function Login() {
   /**
    * Logs in users and sets their authentication persistence
    */
-  function setAuthPersistence() {
+  function setAuthPersistence(event) {
+    event.preventDefault();
     const auth = getAuth();
     setPersistence(auth, browserLocalPersistence)
       .then(() => {
@@ -35,10 +36,10 @@ function Login() {
         // ...
         // New sign-in will be persisted with local persistence.
         signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            // Signed in
+          .then(() => {
+            window.location.pathname = "/Calorie-Tracker";
           })
-          .catch((error) => {
+          .catch(() => {
             setLoginError(true);
           });
       })
@@ -50,48 +51,51 @@ function Login() {
   }
 
   return (
-    <div className="login-page-container">
+    <div className="login-page-flexbox">
       <div className="main-content-login">
-        <Form className="login-form">
-          <h2 className="form-title-login">Log in to Calorie-Tracker!</h2>
-
-          <Form.Group className="login-email-field" controlId="formBasicEmail">
-            <Form.Label className="form-subtitle-login">
-              Email address
-            </Form.Label>
+        <h1 className="form-title-login">Login to Calorie-Tracker!</h1>
+        <p className="form-subtitle-login">
+          Login using your email and password
+        </p>
+        <Form className="login-form" onSubmit={setAuthPersistence}>
+          <Form.Group controlId="formBasicEmail">
             <Form.Control
+              className="login-email-field"
               type="email"
-              placeholder="Enter email"
+              placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group
-            className="login-password-field"
-            controlId="formBasicPassword"
-          >
-            <Form.Label className="form-subtitle-login">Password</Form.Label>
+          <Form.Group controlId="formBasicPassword">
             <Form.Control
+              className="login-password-field"
               type="password"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
 
-          <Link to="/" className="login-button">
-            <Button variant="primary" onClick={setAuthPersistence}>
-              Log in
-            </Button>
-          </Link>
+          <Button variant="primary" className="login-button" type="submit">
+            Sign In
+          </Button>
 
           {loginError && (
             <p className="error-message-login">Incorrect email or password</p>
           )}
-
-          <Link to="/signup" className="signup-link">
-            Click here to Signup
-          </Link>
         </Form>
+      </div>
+      <div className="sidebar-signup">
+        <h1 className="sidebar-signup-title">New Here?</h1>
+        <p className="sidebar-signup-text">
+          Signup now and discover the best diet plan for you!
+        </p>
+        <p className="sidebar-signup-text">It's completely free!</p>
+        <Link to="/signup">
+          <Button variant="primary" className="sidebar-signup-button">
+            Sign Up
+          </Button>
+        </Link>
       </div>
     </div>
   );

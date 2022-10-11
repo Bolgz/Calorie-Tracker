@@ -20,10 +20,11 @@ function Signup() {
   /**
    * Handles account creation with firebase
    */
-  function createUserAccount() {
+  function createUserAccount(event) {
+    event.preventDefault();
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(() => {
         //Switches to home screen upon account creation
         window.location.pathname = "/Calorie-Tracker";
       })
@@ -59,47 +60,54 @@ function Signup() {
   }
 
   return (
-    <div className="main-content">
-      <Form className="signup-form">
-        <h2 className="form-title">Create a Calorie Tracker Account</h2>
+    <div className="signup-page-flexbox">
+      <div className="main-content">
+        <h1 className="form-title-login">Signup For Calorie-Tracker!</h1>
+        <p className="form-subtitle-login">
+          Signup using an email and password. It's Free!
+        </p>
+        <Form className="signup-form" onSubmit={createUserAccount}>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Control
+              className="signup-email-field"
+              type="email"
+              placeholder="Enter email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
 
-        <Form.Group className="signup-email-field" controlId="formBasicEmail">
-          <Form.Label className="form-subtitle">Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Control
+              className="signup-password-field"
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Form.Text className="text-muted">Make it strong!</Form.Text>
+          </Form.Group>
 
-        <Form.Group
-          className="signup-password-field"
-          controlId="formBasicPassword"
-        >
-          <Form.Label className="form-subtitle">Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Form.Text className="text-muted">Make it strong!</Form.Text>
-        </Form.Group>
-
-        <div className="submit-button">
-          <Button onClick={createUserAccount} variant="primary">
-            Submit
+          <Button type="submit" variant="primary" className="signup-button">
+            Signup
           </Button>
-        </div>
 
-        {getSignupErrorMessage()}
-
-        <Link to="/login" className="login-link">
-          Click here to login
+          {getSignupErrorMessage()}
+        </Form>
+      </div>
+      <div className="sidebar-signup">
+        <h1 className="sidebar-signup-title">Have An Account?</h1>
+        <p className="sidebar-signup-text">Welcome back!</p>
+        <p className="sidebar-signup-text">
+          Click below to sign in to you Calorie-Tracker account
+        </p>
+        <Link to="/login">
+          <Button variant="primary" className="sidebar-signup-button">
+            Sign in
+          </Button>
         </Link>
-      </Form>
+      </div>
     </div>
   );
 }
