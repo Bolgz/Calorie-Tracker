@@ -1,18 +1,38 @@
 .navigation-title {
-  margin-top: 20px;
-  margin-left: 25px;
-  margin-bottom: 50px;
+  color: black;
+  font-size: 33px;
+  display: inline;
+  margin-left: -55px;
+}
+
+.logo {
+  display: inline;
+  margin-left: -77px;
+  margin-top: -12px;
+}
+
+.menuItem {
+  margin-bottom: 25px;
 }
 
 .logout-button {
   padding: 0%;
   text-decoration: none;
-  color: #adadad;
+  color: #000000;
   margin-top: -2px;
+  font-size: 19px;
 }
 
 .logout-button:hover {
-  color: #d8d8d8;
+  color: #636363;
+}
+
+.title-link {
+  text-decoration: none;
+  height: 40px;
+  margin-top: 40px;
+  margin-left: 36px;
+  margin-bottom: 50px;
 }
 
 @keyframes swing {
@@ -38,9 +58,10 @@
 }
 
 .pro-sidebar {
-  color: #adadad;
+  /*Changes icon colour*/
+  color: #ffffff;
   height: 100vh;
-  width: 270px;
+  width: 300px;
   min-width: 270px;
   text-align: left;
   transition: width, left, right, 0.3s;
@@ -48,7 +69,8 @@
   z-index: 1009;
 }
 .pro-sidebar > .pro-sidebar-inner {
-  background: #1d1d1d;
+  /*Changes background colour*/
+  background: #e4e3e3;
   height: 100%;
   position: relative;
   z-index: 101;
@@ -298,7 +320,7 @@
 }
 .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
   position: relative;
-  background-color: #2b2b2b;
+  background-color: #ffffff;
 }
 .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item > div > ul {
   padding-top: 15px;
@@ -306,7 +328,7 @@
 }
 .pro-sidebar .pro-menu a {
   text-decoration: none;
-  color: #adadad;
+  color: #020202;
 }
 .pro-sidebar .pro-menu a:before {
   content: "";
@@ -318,14 +340,14 @@
   background-color: transparent;
 }
 .pro-sidebar .pro-menu a:hover {
-  color: #d8d8d8;
+  color: #636363;
 }
 .pro-sidebar .pro-menu .pro-menu-item {
-  font-size: 15px;
-  margin-left: 7px;
+  font-size: 19px;
+  margin-left: 30px;
 }
 .pro-sidebar .pro-menu .pro-menu-item.active {
-  color: #d8d8d8;
+  color: #ffffff;
 }
 .pro-sidebar .pro-menu .pro-menu-item .suffix-wrapper {
   opacity: 1;
@@ -350,7 +372,7 @@
 }
 .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item > .pro-icon-wrapper {
   margin-right: 10px;
-  font-size: 14px;
+  font-size: 18px;
   width: 35px;
   min-width: 35px;
   height: 35px;
@@ -461,7 +483,8 @@
   .pro-menu-item
   > .pro-inner-item
   > .pro-icon-wrapper {
-  background-color: #2b2b2b;
+  /*Changes icon background colour*/
+  background-color: #383838;
 }
 .pro-sidebar
   .pro-menu.square
