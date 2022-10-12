@@ -1,0 +1,12 @@
+.droppable {
+  width: 350px;
+  height: 320px;
+  margin-top: 20px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  margin-left: -20px;
+  background-color: #69e665d3;
+  border-color: #69e665d3;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
