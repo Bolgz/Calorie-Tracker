@@ -6,6 +6,7 @@ import GoalsForm from "./GoalsForm";
 import Button from "react-bootstrap/Button";
 import * as utilities from "../../../Utilities/FireStoreUtilities";
 import { getAuth } from "firebase/auth";
+import RecommendationCard from "./RecommendationCard";
 
 function Goals() {
   const [canShowRecommendations, setCanShowRecommendations] = useState(false);
@@ -33,38 +34,6 @@ function Goals() {
     // eslint-disable-next-line
   }, []);
 
-  //These are the diet recommendation cards generated when the 'get recommendations' form is submitted
-  const dietRecommendationsCards = dietRecommendations.map((diet) => {
-    return (
-      <div className="recommendation-card" key={diet.name}>
-        <h3 className="recommendation-title">{diet.name}</h3>
-        <p className="recommendations-sub">Calories(Kcal):</p>
-        <p className="recommendations-value">{diet.calorie}</p>
-        <br />
-        <br />
-        <p className="recommendations-sub">Carbs(grams):</p>
-        <p className="recommendations-value">{diet.carbIntake}</p>
-        <br />
-        <br />
-        <p className="recommendations-sub">Fats(grams):</p>
-        <p className="recommendations-value">{diet.fatsIntake}</p>
-        <br />
-        <br />
-        <p className="recommendations-sub">Proteins(grams):</p>
-        <p className="recommendations-value">{diet.proteinsIntake}</p>
-        <Link to="/">
-          <Button
-            variant="primary"
-            onClick={() => activateDiet(diet.name)}
-            className="recommendation-activate-button"
-          >
-            Activate Diet
-          </Button>
-        </Link>
-      </div>
-    );
-  });
-
   //If form has been submitted, show recommendations
   if (canShowRecommendations) {
     return (
@@ -77,7 +46,11 @@ function Goals() {
         />
 
         <div className="recommendations-container">
-          {dietRecommendationsCards}
+          {dietRecommendations.map((diet) => {
+            return (
+              <RecommendationCard diet={diet} activateDiet={activateDiet} />
+            );
+          })}
         </div>
       </div>
     );
@@ -93,7 +66,7 @@ function Goals() {
           setDietRecommendations={setDietRecommendations}
         />
         <div className="no-recommendations-container">
-          <h1 className="no-data-header">Weight Loss Warning</h1>
+          <h2 className="no-data-header">Weight Loss Warning</h2>
           <div className="no-data-warning-container">
             <p className="no-data-warning-text">
               If you are wanting to gain or lose large amounts of weight please
@@ -120,22 +93,18 @@ function Goals() {
           setDietRecommendations={setDietRecommendations}
         />
         <div className="no-recommendations-container">
+          <h2 className="no-data-header">No Recommendations</h2>
           <div className="application-access-text-conatiner">
             <p className="application-access-text">
               Please fill out the form on the left hand side of the page and
-              activate a diet in order to get access to the full application
+              activate a diet in order to get access to the full application.
             </p>
           </div>
 
           <div className="no-data-warning-container">
             <p className="no-data-warning-text">
               If you are wanting to gain or lose large amounts of weight please
-              consult a doctor
-            </p>
-            <p className="no-data-warning-text">
-              The recommendations given on this page are to be used as
-              guidelines. These may not be accurate given your build, metabolic
-              rate, activity level etc.
+              consult a doctor.
             </p>
           </div>
         </div>

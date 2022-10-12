@@ -124,14 +124,12 @@ function GoalsForm(props) {
 
   return (
     <div className="goal-entry-container">
-      <h1>Get Recommendations</h1>
+      <h2>Get Recommendations</h2>
       <Form onSubmit={setGoals}>
         <Form.Group className="goal-form-field">
           <Form.Label>Starting Weight (Kg)</Form.Label>
           <Form.Control
             required
-            min={45}
-            max={140}
             type="number"
             placeholder="Enter your starting weight"
             onChange={(e) => setStartingWeight(e.target.value)}
@@ -143,8 +141,6 @@ function GoalsForm(props) {
           <Form.Label>Height (cm)</Form.Label>
           <Form.Control
             required
-            min={122}
-            max={275}
             type="number"
             placeholder="Enter your height (cm)"
             onChange={(e) => setHeight(e.target.value)}
@@ -156,8 +152,6 @@ function GoalsForm(props) {
           <Form.Label>Age</Form.Label>
           <Form.Control
             required
-            min={18}
-            max={75}
             type="number"
             placeholder="Enter your age"
             onChange={(e) => setAge(e.target.value)}
@@ -169,8 +163,6 @@ function GoalsForm(props) {
           <Form.Label>Goal Weight (Kg)</Form.Label>
           <Form.Control
             required
-            min={50}
-            max={115}
             type="number"
             placeholder="Enter you goal weight"
             onChange={(e) => setGoalWeight(e.target.value)}

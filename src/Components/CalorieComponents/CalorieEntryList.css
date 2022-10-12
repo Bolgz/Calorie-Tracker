@@ -3,9 +3,11 @@
   border-style: solid;
   border-width: 2px;
   border-radius: 10px;
-  border-color: rgb(0, 0, 0);
   padding: 2%;
   width: 845px;
+  background-color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .calorie-list-header-container {

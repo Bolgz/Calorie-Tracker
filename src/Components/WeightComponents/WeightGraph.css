@@ -1,15 +1,23 @@
-.graph {
-  min-height: 450px;
-  max-height: 450px;
-  min-width: 950px;
-  max-width: 950px;
-  margin: auto;
-  margin-top: 25px;
+.progress-graph-title {
+  margin-bottom: -55px;
+  margin-top: 0px;
+  margin-left: 47px;
+}
+
+.graph-container {
+  width: 1000px;
+  padding: 2%;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .weight_graph_page {
-  margin: auto;
   margin-top: 65px;
+  margin-left: 590px;
 }
 
 .weight_form_and_entries_container {
@@ -18,4 +26,7 @@
   border-style: solid;
   border-radius: 10px;
   border-width: 2px;
+  background-color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }

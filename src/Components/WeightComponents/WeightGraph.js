@@ -350,11 +350,15 @@ function WeightGraph() {
 
   return (
     <div className="weight_graph_page">
-      <DateFilter
-        changeMonthFilter={handleChangeMonthFilter}
-        changeYearFilter={handleChangeYearFilter}
-      />
-      <Line options={options} data={graphData} className="graph" />
+      <div className="graph-container">
+        <h2 className="progress-graph-title">Progress Graph</h2>
+        <DateFilter
+          changeMonthFilter={handleChangeMonthFilter}
+          changeYearFilter={handleChangeYearFilter}
+        />
+        <Line options={options} data={graphData} />
+      </div>
+
       <div className="weight_form_and_entries_container">
         <WeightEntryForm
           addWeightEntry={handleWeightEntry}

@@ -47,7 +47,7 @@ function DateFilter(props) {
           {monthFilter.length > 0 ? monthFilter : "Month"}
         </Dropdown.Toggle>
 
-        <Dropdown.Menu>
+        <Dropdown.Menu variant="outline-primary">
           <Dropdown.Item eventKey={"January"}>January</Dropdown.Item>
           <Dropdown.Item eventKey={"February"}>February</Dropdown.Item>
           <Dropdown.Item eventKey={"March"}>March</Dropdown.Item>

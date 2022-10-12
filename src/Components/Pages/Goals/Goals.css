@@ -1,6 +1,7 @@
 .goals-flex-box {
   display: flex;
-  background-color: rgb(255, 255, 255);
+  background-color: #f3f3f5;
+  height: 100vh;
 }
 
 .goal-form-field-inline {
@@ -20,54 +21,31 @@
   margin-top: 80px;
   margin-right: 100px;
   margin-left: -200px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .no-recommendations-container {
   width: 800px;
-  height: 750px;
-  margin-top: 80px;
-  margin-right: 100px;
+  height: 660px;
+  margin-top: 140px;
+  margin-right: 130px;
   margin-left: -200px;
-}
-
-.recommendations-sub {
-  font-size: 19px;
-  display: inline;
-}
-
-.recommendations-value {
-  font-size: 19px;
-  display: inline;
-  float: right;
-  margin-right: 85px;
-}
-
-.recommendation-card {
-  flex-wrap: wrap;
   border-style: solid;
-  border-color: black;
   border-width: 2px;
-  border-radius: 25px;
-  margin-left: 30px;
-  width: 320px;
-  height: 340px;
-  padding: 2%;
-}
-
-.recommendation-title {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.recommendation-activate-button {
-  margin-left: 75px;
-  margin-top: 8px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .no-data-header {
-  margin-top: 20px;
-  margin-left: 200px;
-  color: brown;
+  text-align: center;
+  margin-top: 40px;
 }
 
 .custom-diet-input {
@@ -85,9 +63,9 @@
 }
 
 .no-data-warning-container {
-  width: 500px;
-  margin-left: 160px;
-  margin-top: 55px;
+  width: 550px;
+  margin: auto;
+  margin-top: 250px;
 }
 
 .no-data-warning-text {
@@ -101,8 +79,7 @@
 }
 
 .application-access-text-conatiner {
-  margin-top: 120px;
-  margin-bottom: 130px;
-  width: 500px;
-  margin-left: 160px;
+  width: 550px;
+  margin: auto;
+  margin-top: 60px;
 }
