@@ -222,19 +222,22 @@ function Goals() {
           setCanShowRecommendations={setCanShowRecommendations}
           setDietRecommendations={setDietRecommendations}
         />
-        <div className="no-recommendations-container">
-          <h2 className="no-data-header">Weight Loss Warning</h2>
-          <div className="no-data-warning-container">
-            <p className="no-data-warning-text">
-              If you are wanting to gain or lose large amounts of weight please
-              consult a doctor
-            </p>
-            <br />
-            <p className="no-data-warning-text">
-              The recommendations given on this page are to be used as
-              guidelines. These may not be accurate given your build, metabolic
-              rate, activity level etc.
-            </p>
+        <div className="goals-flex-box">
+          <div className="no-recommendations-container">
+            <h2 className="no-data-header">No Recommendations</h2>
+            <div className="application-access-text-conatiner">
+              <p className="application-access-text">
+                Please fill out the form on the left hand side of the page to
+                receive diet recommendations.
+              </p>
+            </div>
+
+            <div className="no-data-warning-container">
+              <p className="no-data-warning-text">
+                If you are wanting to gain or lose large amounts of weight
+                please consult a doctor.
+              </p>
+            </div>
           </div>
         </div>
       </div>
