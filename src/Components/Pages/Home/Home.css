@@ -1,6 +1,7 @@
 .home-flex-box {
   display: flex;
   background-color: #f3f3f5;
+  height: 100vh;
 }
 
 .dashboard-title {

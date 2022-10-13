@@ -1,18 +1,42 @@
+.account-flex-box {
+  background-color: #f3f3f5;
+  height: 100vh;
+}
+
 .firestore-retrievables {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 550px;
-  margin-bottom: 0px;
+  margin-left: 820px;
   width: 500px;
 }
 
 .account-page-container {
   margin-bottom: 50px;
+  padding: 2%;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .account-page-title {
-  margin-bottom: 100px;
+  margin-bottom: 50px;
   margin-top: 30px;
   font-size: 45px;
+  text-align: center;
+}
+
+.active-diet-section {
+  margin: auto;
+  margin-left: 0px;
+  padding: 2%;
+  width: 500px;
+  height: 175px;
+}
+
+.active-diet-table {
+  margin-left: -10px;
 }

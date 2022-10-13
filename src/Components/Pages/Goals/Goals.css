@@ -1,5 +1,7 @@
 .goals-flex-box {
   display: flex;
+  background-color: #f3f3f5;
+  height: 100vh;
 }
 
 .goals-main-container {

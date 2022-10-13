@@ -9,6 +9,7 @@ import { DndContext, pointerWithin } from "@dnd-kit/core";
 import Draggable from "./DragAndDrop/Draggable";
 import Droppable from "./DragAndDrop/Droppable";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 function Goals() {
   const [canShowRecommendations, setCanShowRecommendations] = useState(false);
@@ -35,7 +36,7 @@ function Goals() {
   //Turning generated diet plans into draggable components
   if (dietRecommendations.length > 0) {
     maintainDraggable = (
-      <Draggable id="maintainDraggable">
+      <Draggable id="Maintain Weight">
         <RecommendationCard
           diet={dietRecommendations[0]}
           activateDiet={activateDiet}
@@ -44,7 +45,7 @@ function Goals() {
       </Draggable>
     );
     lightDraggable = (
-      <Draggable id="lightDraggable">
+      <Draggable id="Light Weight Loss">
         <RecommendationCard
           diet={dietRecommendations[1]}
           activateDiet={activateDiet}
@@ -53,7 +54,7 @@ function Goals() {
       </Draggable>
     );
     heavyDraggable = (
-      <Draggable id="heavyDraggable">
+      <Draggable id="Heavy Weight Loss">
         <RecommendationCard
           diet={dietRecommendations[2]}
           activateDiet={activateDiet}
@@ -62,7 +63,7 @@ function Goals() {
       </Draggable>
     );
     gainDraggable = (
-      <Draggable id="gainDraggable">
+      <Draggable id="Gain Weight">
         <RecommendationCard
           diet={dietRecommendations[3]}
           activateDiet={activateDiet}
@@ -75,7 +76,7 @@ function Goals() {
   //Makes sure only one draggable can be in droppable container at a time
   function handleDragEnd({ over }) {
     switch (activeCard) {
-      case "maintainDraggable":
+      case "Maintain Weight":
         if (over) {
           setMaintainParent(over.id);
           setLightParent(null);
@@ -85,7 +86,7 @@ function Goals() {
           setMaintainParent(null);
         }
         break;
-      case "lightDraggable":
+      case "Light Weight Loss":
         if (over) {
           setLightParent(over.id);
           setMaintainParent(null);
@@ -95,7 +96,7 @@ function Goals() {
           setLightParent(null);
         }
         break;
-      case "heavyDraggable":
+      case "Heavy Weight Loss":
         if (over) {
           setHeavyParent(over.id);
           setLightParent(null);
@@ -105,7 +106,7 @@ function Goals() {
           setHeavyParent(null);
         }
         break;
-      case "gainDraggable":
+      case "Gain Weight":
         if (over) {
           setGainParent(over.id);
           setLightParent(null);
@@ -125,13 +126,16 @@ function Goals() {
     setActiveCard(event.active.id);
   }
 
-  function activateDiet(dietName) {
+  function activateDiet() {
     dietRecommendations.forEach((diet) => {
-      if (diet.name === dietName) {
+      if (diet.name === activeCard) {
         //Send selected diet to firebase
         const auth = getAuth();
-        utilities.addActiveDiet(diet, auth.currentUser.uid);
-        setHasChosenDiet(true);
+        utilities.addActiveDiet(diet, auth.currentUser.uid).then(() => {
+          setHasChosenDiet(true);
+          //Use link component instead
+          //window.location.pathname = "/Calorie-Tracker";
+        });
       }
     });
   }
@@ -189,13 +193,15 @@ function Goals() {
                 lightParent !== null ||
                 heavyParent !== null ||
                 gainParent !== null ? (
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    className="diet-activate-button"
-                  >
-                    Activate Diet
-                  </Button>
+                  <Link to="/">
+                    <Button
+                      variant="primary"
+                      onClick={activateDiet}
+                      className="diet-activate-button"
+                    >
+                      Activate Diet
+                    </Button>
+                  </Link>
                 ) : (
                   ""
                 )}

@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { Link } from "react-router-dom";
 
 function Account() {
   //Holds active diet
@@ -99,33 +100,44 @@ function Account() {
   }
 
   return (
-    <div className="home-flex-box">
+    <div className="account-flex-box">
       <SideBar />
       <div className="firestore-retrievables">
         <h1 className="account-page-title">Account Management</h1>
         <div className="account-page-container">
-          <h3>Active Diet</h3>
-          <Table striped bordered hover size="sm">
-            <thead>
-              <tr>
-                <th>Diet Goal</th>
-                <th>Calories</th>
-                <th>Carbohydrates</th>
-                <th>Fats</th>
-                <th>Proteins</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{activeDiet.name}</td>
-                <td>{activeDiet.calorie} Kcal</td>
-                <td>{activeDiet.carbIntake}g</td>
-                <td>{activeDiet.fatsIntake}g</td>
-                <td>{activeDiet.proteinsIntake}g</td>
-              </tr>
-            </tbody>
-          </Table>
-          <p>You can change your active diet in the Goals page.</p>
+          <div className="active-diet-section">
+            <h3>Active Diet</h3>
+            <Table
+              striped
+              bordered
+              hover
+              size="sm"
+              className="active-diet-table"
+            >
+              <thead>
+                <tr>
+                  <th>Diet Goal</th>
+                  <th>Calories</th>
+                  <th>Carbohydrates</th>
+                  <th>Fats</th>
+                  <th>Proteins</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{activeDiet.name}</td>
+                  <td>{activeDiet.calorie} Kcal</td>
+                  <td>{activeDiet.carbIntake}g</td>
+                  <td>{activeDiet.fatsIntake}g</td>
+                  <td>{activeDiet.proteinsIntake}g</td>
+                </tr>
+              </tbody>
+            </Table>
+            <p>
+              You can change your active diet in the{" "}
+              <Link to="/goals">Goals</Link> page.
+            </p>
+          </div>
         </div>
         <br />
         <div className="account-page-container">
