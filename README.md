@@ -15,7 +15,7 @@ To use the Calorie Tracking Application, follow these steps:
 
 1. Clone this repository to your local machine.
 ```
-git clone https://github.com/yourusername/calorie-tracking-app.git
+git clone https://github.com/marco-freemantle/Calorie-Tracker.git
 ```
 2. Install dependencies
 ```
